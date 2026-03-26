@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AmicaBull — Co-Parenting, Resolved.</title>
+  <meta name="description" content="AI-powered co-parenting platform. Structured conflict resolution, fair mediation, and legal-ready communication logs. Replace arguing with solutions.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">
+        <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="14" cy="20" r="10" stroke="currentColor" stroke-width="2.5" fill="none"/>
+          <circle cx="26" cy="20" r="10" stroke="currentColor" stroke-width="2.5" fill="none"/>
+          <path d="M20 13.5C21.5 15.5 22 17.5 22 20C22 22.5 21.5 24.5 20 26.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>AmicaBull</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#how-it-works">How It Works</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="pages/login.html" class="btn btn-ghost">Log In</a>
+        <a href="pages/signup.html" class="btn btn-primary">Start Free</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-bg">
+      <div class="hero-gradient"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-badge">
+        <span class="badge">AI-Powered Mediation</span>
+      </div>
+      <h1 class="hero-title">
+        Co-Parenting<br>
+        <span class="text-gradient">Resolved.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Stop the endless back-and-forth. AmicaBull transforms co-parenting conflicts into
+        structured, fair resolutions — with AI mediation that keeps things civil and
+        legal-ready logs that protect everyone.
+      </p>
+      <div class="hero-actions">
+        <a href="pages/signup.html" class="btn btn-primary btn-lg">
+          Start Free Trial
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </a>
+        <a href="#how-it-works" class="btn btn-outline btn-lg">See How It Works</a>
+      </div>
+      <div class="hero-proof">
+        <div class="hero-stat">
+          <strong>3-Step</strong>
+          <span>Resolution Flow</span>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat">
+          <strong>No Endless</strong>
+          <span>Arguments</span>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat">
+          <strong>Court-Ready</strong>
+          <span>Documentation</span>
+        </div>
+      </div>
+    </div>
+    <!-- Floating UI Preview -->
+    <div class="hero-preview">
+      <div class="preview-card">
+        <div class="preview-header">
+          <div class="preview-dot green"></div>
+          <span>AI Mediation Summary</span>
+        </div>
+        <div class="preview-body">
+          <div class="preview-line">
+            <span class="preview-label">Issue:</span>
+            <span>Holiday schedule conflict — Winter break</span>
+          </div>
+          <div class="preview-line">
+            <span class="preview-label">Shared Priority:</span>
+            <span>Both parents want kids to enjoy the holidays</span>
+          </div>
+          <div class="preview-options">
+            <div class="preview-option">
+              <span class="option-tag fair">Recommended</span>
+              Alternate years, with a mid-break exchange
+            </div>
+            <div class="preview-option">
+              <span class="option-tag">Option B</span>
+              Split break evenly — first half / second half
+            </div>
+          </div>
+          <div class="preview-score">
+            <span>Flexibility Score</span>
+            <div class="score-bars">
+              <div class="score-bar"><div class="score-fill" style="width:78%"></div><span>Parent A: 78</span></div>
+              <div class="score-bar"><div class="score-fill" style="width:65%"></div><span>Parent B: 65</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Problem Section -->
+  <section class="section section-dark" id="problem">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">The Problem</span>
+        <h2>Current co-parenting apps are <span class="text-gradient">broken</span></h2>
+        <p>We studied thousands of reviews. Here's what parents actually experience.</p>
+      </div>
+      <div class="problems-grid">
+        <div class="problem-card">
+          <div class="problem-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3>Endless Arguments</h3>
+          <p>Other apps let threads spiral into 50+ message fights. No resolution, just more conflict that lawyers love to bill for.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3>Hidden Costs</h3>
+          <p>$50 just to download your own records? $300/year for basic messaging? Other platforms nickel-and-dime you during your hardest moments.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <h3>1990s Interfaces</h3>
+          <p>Clunky, crash-prone apps with broken notifications and disappearing messages. You're trusting your kids' safety to buggy software.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          </div>
+          <h3>No Real Mediation</h3>
+          <p>They log the fight but don't help resolve it. A "tone meter" isn't mediation — it's a spell-checker with a gavel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">How It Works</span>
+        <h2>From conflict to resolution in <span class="text-gradient">3 structured steps</span></h2>
+        <p>No more open-ended arguing. Every issue follows a clear path to resolution.</p>
+      </div>
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Submit the Issue</h3>
+            <p>Parent A describes the issue using our guided form. The AI helps frame it neutrally, focusing on the child's needs — not blame.</p>
+            <div class="step-detail">
+              <div class="step-tag">Guided prompts</div>
+              <div class="step-tag">Neutral framing</div>
+              <div class="step-tag">Child-focused</div>
+            </div>
+          </div>
+          <div class="step-visual">
+            <div class="mini-card">
+              <div class="mini-header">New Issue</div>
+              <div class="mini-field">
+                <label>What needs to be decided?</label>
+                <div class="mini-input">Summer camp schedule for July</div>
+              </div>
+              <div class="mini-field">
+                <label>What matters most to you?</label>
+                <div class="mini-input">Kids get outdoor experience</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>One Response, One Rebuttal</h3>
+            <p>Parent B gets one structured response. If needed, Parent A gets one rebuttal. That's it. No spiral. No 3 AM rage texts.</p>
+            <div class="step-detail">
+              <div class="step-tag">Single response</div>
+              <div class="step-tag">Max 1 rebuttal</div>
+              <div class="step-tag">Timed windows</div>
+            </div>
+          </div>
+          <div class="step-visual">
+            <div class="mini-card">
+              <div class="mini-thread">
+                <div class="mini-msg parent-a">
+                  <span class="msg-author">Parent A</span>
+                  <span class="msg-status submitted">Issue Submitted</span>
+                </div>
+                <div class="mini-msg parent-b">
+                  <span class="msg-author">Parent B</span>
+                  <span class="msg-status responded">Response</span>
+                </div>
+                <div class="mini-msg parent-a">
+                  <span class="msg-author">Parent A</span>
+                  <span class="msg-status rebuttal">Final Rebuttal</span>
+                </div>
+                <div class="mini-msg ai">
+                  <span class="msg-author">AI Mediator</span>
+                  <span class="msg-status resolved">Summary & Options</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>AI Generates Fair Options</h3>
+            <p>Our AI analyzes both positions, identifies shared priorities, and presents multiple compromise options. Both parents vote. Done.</p>
+            <div class="step-detail">
+              <div class="step-tag">Neutral summary</div>
+              <div class="step-tag">Compromise options</div>
+              <div class="step-tag">Flexibility score</div>
+            </div>
+          </div>
+          <div class="step-visual">
+            <div class="mini-card">
+              <div class="mini-header green">AI Resolution</div>
+              <div class="mini-resolution">
+                <div class="mini-priority">Shared: Both want kids active this summer</div>
+                <div class="mini-option selected">
+                  <span class="check">&#10003;</span> 2-week day camp + 1-week sleepaway
+                </div>
+                <div class="mini-option">
+                  <span class="circle"></span> Full month day camp, split transport
+                </div>
+                <div class="mini-option">
+                  <span class="circle"></span> Alternate weeks between two camps
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section section-alt" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Features</span>
+        <h2>Everything you need. <span class="text-gradient">Nothing you don't.</span></h2>
+        <p>Built by studying what other apps get wrong — and fixing it.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card featured">
+          <div class="feature-icon-lg">
+            <svg viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="20" stroke="url(#grad1)" stroke-width="2.5"/>
+              <path d="M16 24l4 4 8-8" stroke="url(#grad1)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs><linearGradient id="grad1" x1="4" y1="4" x2="44" y2="44"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+            </svg>
+          </div>
+          <h3>AI Mediation Engine</h3>
+          <p>Not just tone-checking — actual mediation. Our AI reads both sides, identifies common ground, de-escalates language, and proposes fair compromises based on family law principles.</p>
+          <ul class="feature-list">
+            <li>De-escalation rewriting</li>
+            <li>Shared priority detection</li>
+            <li>Multiple compromise generation</li>
+            <li>Bias-free neutral summaries</li>
+          </ul>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          </div>
+          <h3>Flexibility Scoring</h3>
+          <p>Track each parent's willingness to compromise over time. Fair, transparent, and useful if things ever go to court.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <h3>Legal-Ready Exports</h3>
+          <p>One-click PDF exports with timestamps, hash verification, and complete audit trails. No $50 access fees — your data is always yours.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          </div>
+          <h3>Shared Calendar</h3>
+          <p>Custody schedules, pickups, events — all synced. Color-coded, conflict-aware, and integrated with Google/Apple Calendar.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          </div>
+          <h3>Bank-Level Security</h3>
+          <p>2FA, end-to-end encryption, GDPR-compliant data handling. Messages can't be edited or deleted. Full audit trail.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
+          </div>
+          <h3>Structured Exchanges</h3>
+          <p>Every issue follows our 3-step flow. No midnight rant threads. No 47-message chains. Just structured, productive communication.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          </div>
+          <h3>Child-First Focus</h3>
+          <p>Every prompt, every AI suggestion, every resolution option centers the child's wellbeing. Because that's the whole point.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <h3>Instant Notifications</h3>
+          <p>Push, email, and SMS — all reliable. No more "I didn't see it." Read receipts with accurate timestamps you can trust.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Section -->
+  <section class="section" id="comparison">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Comparison</span>
+        <h2>How AmicaBull <span class="text-gradient">stacks up</span></h2>
+      </div>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th class="highlight">AmicaBull</th>
+              <th>OurFamilyWizard</th>
+              <th>TalkingParents</th>
+              <th>AppClose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>AI Mediation</td>
+              <td class="highlight"><span class="check-mark">&#10003;</span> Full AI mediator</td>
+              <td><span class="x-mark">&#10007;</span> Tone meter only</td>
+              <td><span class="x-mark">&#10007;</span> None</td>
+              <td><span class="x-mark">&#10007;</span> None</td>
+            </tr>
+            <tr>
+              <td>Structured Resolution</td>
+              <td class="highlight"><span class="check-mark">&#10003;</span> 3-step flow</td>
+              <td><span class="x-mark">&#10007;</span> Open threads</td>
+              <td><span class="x-mark">&#10007;</span> Open threads</td>
+              <td><span class="x-mark">&#10007;</span> Open threads</td>
+            </tr>
+            <tr>
+              <td>Flexibility Scoring</td>
+              <td class="highlight"><span class="check-mark">&#10003;</span></td>
+              <td><span class="x-mark">&#10007;</span></td>
+              <td><span class="x-mark">&#10007;</span></td>
+              <td><span class="x-mark">&#10007;</span></td>
+            </tr>
+            <tr>
+              <td>Free Exports</td>
+              <td class="highlight"><span class="check-mark">&#10003;</span> Always free</td>
+              <td><span class="x-mark">&#10007;</span> Premium only</td>
+              <td><span class="x-mark">&#10007;</span> $50/access</td>
+              <td><span class="check-mark">&#10003;</span></td>
+            </tr>
+            <tr>
+              <td>Modern Interface</td>
+              <td class="highlight"><span class="check-mark">&#10003;</span></td>
+              <td><span class="x-mark">&#10007;</span> Outdated</td>
+              <td><span class="partial-mark">~</span> Basic</td>
+              <td><span class="partial-mark">~</span> Basic</td>
+            </tr>
+            <tr>
+              <td>2FA Security</td>
+              <td class="highlight"><span class="check-mark">&#10003;</span></td>
+              <td><span class="x-mark">&#10007;</span></td>
+              <td><span class="check-mark">&#10003;</span></td>
+              <td><span class="x-mark">&#10007;</span></td>
+            </tr>
+            <tr>
+              <td>Starting Price</td>
+              <td class="highlight"><strong>Free</strong></td>
+              <td>$150/yr</td>
+              <td>$10/mo</td>
+              <td>Free</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section section-alt" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Pricing</span>
+        <h2>Transparent pricing. <span class="text-gradient">No surprises.</span></h2>
+        <p>Your data exports are always free. No hidden fees. Cancel anytime.</p>
+      </div>
+      <div class="pricing-toggle">
+        <span class="toggle-label active" id="monthlyLabel">Monthly</span>
+        <button class="toggle-switch" id="pricingToggle" aria-label="Toggle annual pricing">
+          <span class="toggle-knob"></span>
+        </button>
+        <span class="toggle-label" id="annualLabel">Annual <span class="save-badge">Save 40%</span></span>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3>Free</h3>
+            <div class="pricing-amount">
+              <span class="price">$0</span>
+              <span class="period">forever</span>
+            </div>
+            <p>For parents ready to try a better way</p>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="check-mark">&#10003;</span> 3 issues per month</li>
+            <li><span class="check-mark">&#10003;</span> Structured resolution flow</li>
+            <li><span class="check-mark">&#10003;</span> Basic AI summaries</li>
+            <li><span class="check-mark">&#10003;</span> Shared calendar</li>
+            <li><span class="check-mark">&#10003;</span> Message history (90 days)</li>
+            <li><span class="check-mark">&#10003;</span> Free PDF exports</li>
+          </ul>
+          <a href="pages/signup.html" class="btn btn-outline btn-block">Get Started</a>
+        </div>
+
+        <div class="pricing-card popular">
+          <div class="popular-badge">Most Popular</div>
+          <div class="pricing-header">
+            <h3>Standard</h3>
+            <div class="pricing-amount">
+              <span class="price monthly-price">$9</span>
+              <span class="price annual-price" style="display:none">$5</span>
+              <span class="period">/month per parent</span>
+            </div>
+            <p>For active co-parenting situations</p>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="check-mark">&#10003;</span> Unlimited issues</li>
+            <li><span class="check-mark">&#10003;</span> Full AI mediation & options</li>
+            <li><span class="check-mark">&#10003;</span> Flexibility scoring</li>
+            <li><span class="check-mark">&#10003;</span> Unlimited message history</li>
+            <li><span class="check-mark">&#10003;</span> Expense tracking</li>
+            <li><span class="check-mark">&#10003;</span> Calendar sync (Google/Apple)</li>
+            <li><span class="check-mark">&#10003;</span> Priority notifications</li>
+            <li><span class="check-mark">&#10003;</span> Free exports — always</li>
+          </ul>
+          <a href="pages/signup.html" class="btn btn-primary btn-block">Start Free Trial</a>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3>Professional</h3>
+            <div class="pricing-amount">
+              <span class="price monthly-price">$19</span>
+              <span class="price annual-price" style="display:none">$12</span>
+              <span class="period">/month per parent</span>
+            </div>
+            <p>For high-conflict or legal situations</p>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="check-mark">&#10003;</span> Everything in Standard</li>
+            <li><span class="check-mark">&#10003;</span> Attorney/mediator access portal</li>
+            <li><span class="check-mark">&#10003;</span> Court-formatted reports</li>
+            <li><span class="check-mark">&#10003;</span> Hash-verified tamper-proof logs</li>
+            <li><span class="check-mark">&#10003;</span> GPS check-in verification</li>
+            <li><span class="check-mark">&#10003;</span> Recorded call transcription</li>
+            <li><span class="check-mark">&#10003;</span> Priority support (< 2hr response)</li>
+            <li><span class="check-mark">&#10003;</span> Custom resolution templates</li>
+          </ul>
+          <a href="pages/signup.html" class="btn btn-outline btn-block">Start Free Trial</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials / Social Proof -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">What Parents Say</span>
+        <h2>Built for real <span class="text-gradient">co-parenting</span> situations</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p>"The structured format changed everything. My ex and I used to have 40-message fights about nothing. Now we resolve things in 3 steps. Our kids notice the difference."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">S</div>
+            <div>
+              <strong>Sarah M.</strong>
+              <span>Co-parenting 2 kids, ages 7 & 10</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p>"I was paying $300/year for OurFamilyWizard and they wanted $50 to export my own messages. AmicaBull gives me better features and my data is always mine."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">J</div>
+            <div>
+              <strong>James K.</strong>
+              <span>Switched from OFW after 2 years</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p>"The AI mediation is genuinely helpful. It found common ground between us that we couldn't see ourselves. The flexibility score keeps us both honest."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">R</div>
+            <div>
+              <strong>Rachel & David</strong>
+              <span>Using AmicaBull for 8 months</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section-alt" id="faq">
+    <div class="container container-sm">
+      <div class="section-header">
+        <span class="section-tag">FAQ</span>
+        <h2>Common questions</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Is AmicaBull admissible in court?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Yes. All communications are timestamped, logged with hash verification, and cannot be edited or deleted after sending. Our Professional plan generates court-formatted reports that attorneys and judges can easily review. We're designed to meet the same evidentiary standards as OurFamilyWizard and TalkingParents.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            What if my co-parent refuses to use AmicaBull?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>You can invite them via email or text. If a court has ordered use of a co-parenting platform, AmicaBull meets all standard requirements. We also offer a "pending parent" mode where you can start documenting and using the calendar while your co-parent's invitation is pending. Many attorneys recommend specifying the platform in custody agreements.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            How does the AI mediation work? Is it biased?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Our AI mediator analyzes both parents' positions equally, identifies shared priorities (especially around child wellbeing), and generates multiple compromise options. It never takes sides. The AI is trained on family mediation best practices and always centers the child's interests. Every summary is transparently labeled as AI-generated, and both parents can flag any perceived bias for human review.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Can I export my data? What does it cost?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Exports are always free on every plan — including Free. We believe your data belongs to you. Export as PDF, CSV, or structured JSON. Professional plan users get court-formatted reports with hash verification for legal proceedings.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            What happens if we can't agree on any of the AI options?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>If neither parent accepts any AI-proposed option, the issue is marked as "unresolved" with a complete log of both positions and the proposed compromises. This documentation is invaluable if you need to escalate to a mediator or attorney. Professional plan users can invite their attorney or mediator directly into the platform to review and help resolve.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            Is my information private and secure?
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="faq-answer">
+            <p>Absolutely. We use bank-level AES-256 encryption, mandatory 2FA, and SOC 2 compliant infrastructure. We never sell your data or use it for advertising. Messages are encrypted in transit and at rest. You can request complete data deletion at any time — no hoops, no delays.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section section-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Your kids deserve parents who can <span class="text-gradient">work together</span></h2>
+        <p>Start resolving conflicts instead of escalating them. Free to try, no credit card required.</p>
+        <div class="cta-actions">
+          <a href="pages/signup.html" class="btn btn-white btn-lg">
+            Start Free Trial
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="/" class="nav-logo">
+            <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="14" cy="20" r="10" stroke="currentColor" stroke-width="2.5" fill="none"/>
+              <circle cx="26" cy="20" r="10" stroke="currentColor" stroke-width="2.5" fill="none"/>
+              <path d="M20 13.5C21.5 15.5 22 17.5 22 20C22 22.5 21.5 24.5 20 26.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span>AmicaBull</span>
+          </a>
+          <p>AI-powered co-parenting resolution. Replace conflict with compromise.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Product</h4>
+          <a href="#features">Features</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#comparison">Compare</a>
+        </div>
+        <div class="footer-links">
+          <h4>Support</h4>
+          <a href="#faq">FAQ</a>
+          <a href="mailto:support@amicabull.com">Contact</a>
+          <a href="#">Help Center</a>
+          <a href="#">Status</a>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">GDPR</a>
+          <a href="#">Security</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 AmicaBull. All rights reserved.</p>
+        <p>Made with care for families navigating change.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit New Issue — AmicaBull</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar (same as dashboard) -->
+    <aside class="sidebar" id="sidebar">
+      <a href="../index.html" class="sidebar-logo">
+        <svg class="logo-icon" viewBox="0 0 40 40" fill="none">
+          <circle cx="14" cy="20" r="10" stroke="currentColor" stroke-width="2.5" fill="none"/>
+          <circle cx="26" cy="20" r="10" stroke="currentColor" stroke-width="2.5" fill="none"/>
+          <path d="M20 13.5C21.5 15.5 22 17.5 22 20C22 22.5 21.5 24.5 20 26.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>AmicaBull</span>
+      </a>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Dashboard
+        </a>
+        <a href="new-issue.html" class="sidebar-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m8-8H4"/></svg>
+          New Issue
+        </a>
+        <a href="#" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          All Issues
+        </a>
+      </nav>
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">S</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">Sarah Mitchell</div>
+          <div class="sidebar-user-plan">Standard Plan</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1>Submit a New Issue</h1>
+          <p>Describe what needs to be decided. Our AI will help frame it neutrally.</p>
+        </div>
+      </div>
+
+      <div class="new-issue-form">
+        <!-- Step indicator -->
+        <div style="display:flex;gap:8px;margin-bottom:32px">
+          <div style="flex:1;padding:12px 16px;background:rgba(99,102,241,0.08);border-radius:var(--radius-sm);text-align:center">
+            <div style="font-size:12px;font-weight:700;color:var(--color-primary);margin-bottom:2px">STEP 1</div>
+            <div style="font-size:13px;font-weight:600">You Submit</div>
+          </div>
+          <div style="flex:1;padding:12px 16px;background:var(--color-bg-alt);border-radius:var(--radius-sm);text-align:center;opacity:0.5">
+            <div style="font-size:12px;font-weight:700;color:var(--color-text-secondary);margin-bottom:2px">STEP 2</div>
+            <div style="font-size:13px;font-weight:600;color:var(--color-text-secondary)">Co-Parent Responds</div>
+          </div>
+          <div style="flex:1;padding:12px 16px;background:var(--color-bg-alt);border-radius:var(--radius-sm);text-align:center;opacity:0.5">
+            <div style="font-size:12px;font-weight:700;color:var(--color-text-secondary);margin-bottom:2px">STEP 3</div>
+            <div style="font-size:13px;font-weight:600;color:var(--color-text-secondary)">AI Resolution</div>
+          </div>
+        </div>
+
+        <form id="issueForm" onsubmit="handleIssueSubmit(event)">
+          <div class="form-group">
+            <label class="form-label" for="category">Category</label>
+            <select class="form-select" id="category" required>
+              <option value="">Select a category</option>
+              <option value="schedule">Schedule / Custody Time</option>
+              <option value="education">Education / School</option>
+              <option value="health">Health / Medical</option>
+              <option value="expenses">Expenses / Financial</option>
+              <option value="travel">Travel / Vacations</option>
+              <option value="activities">Activities / Extracurriculars</option>
+              <option value="communication">Communication</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="title">What needs to be decided?</label>
+            <input class="form-input" type="text" id="title" placeholder="e.g., Summer camp schedule for July" required>
+            <div class="form-hint">Keep it specific and focused on one decision.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="context">Provide context</label>
+            <textarea class="form-textarea" id="context" placeholder="Explain the situation. What are the options you see? What constraints exist (deadlines, costs, logistics)?" required></textarea>
+            <div class="form-hint">Focus on facts and logistics, not blame. The AI will help reframe if needed.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="priority">What matters most to you in this decision?</label>
+            <textarea class="form-textarea" id="priority" placeholder="e.g., I want the kids to have an outdoor experience and I need the schedule to work with my July 4th family reunion." style="min-height:80px" required></textarea>
+            <div class="form-hint">This helps the AI find common ground with your co-parent's priorities.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="urgency">Urgency</label>
+            <select class="form-select" id="urgency" required>
+              <option value="">How urgent is this?</option>
+              <option value="low">Low — No deadline, decide when convenient</option>
+              <option value="medium">Medium — Should be decided within 1-2 weeks</option>
+              <option value="high">High — Decision needed within a few days</option>
+              <option value="critical">Critical — Immediate decision required</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="deadline">Decision deadline (optional)</label>
+            <input class="form-input" type="date" id="deadline">
+            <div class="form-hint">If there's a registration deadline, court date, or other hard deadline.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Which children does this involve?</label>
+            <div style="display:flex;gap:12px;flex-wrap:wrap">
+              <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer">
+                <input type="checkbox" value="emma" checked style="accent-color:var(--color-primary)"> Emma (10)
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer">
+                <input type="checkbox" value="noah" checked style="accent-color:var(--color-primary)"> Noah (7)
+              </label>
+            </div>
+          </div>
+
+          <!-- AI Reframe Preview -->
+          <div id="aiPreview" style="display:none;margin-top:24px">
+            <div class="ai-summary-card">
+              <h3>
+                AI Neutral Reframe
+                <span class="ai-badge">Preview</span>
+              </h3>
+              <div class="ai-section">
+                <h4>How your co-parent will see this issue:</h4>
+                <p id="aiReframeText">Loading AI reframe...</p>
+              </div>
+              <p style="font-size:12px;color:var(--color-text-light);margin-top:12px">
+                Your original text is preserved in the audit log. This neutral version is what your co-parent sees first, with your full submission available on request.
+              </p>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" onclick="previewReframe()">Preview AI Reframe</button>
+            <button type="submit" class="btn btn-primary">
+              Submit Issue
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script>
+    function previewReframe() {
+      const title = document.getElementById('title').value;
+      const context = document.getElementById('context').value;
+      const preview = document.getElementById('aiPreview');
+      const reframeText = document.getElementById('aiReframeText');
+
+      if (!title || !context) {
+        showToast('Please fill in the issue title and context first', 'error');
+        return;
+      }
+
+      preview.style.display = 'block';
+      reframeText.textContent = 'Analyzing and reframing...';
+
+      // Simulate AI reframe
+      setTimeout(() => {
+        reframeText.textContent = `A decision is needed regarding "${title}." Both parents' input is requested on the available options, considering the children's needs, scheduling constraints, and any relevant deadlines. The submitting parent has provided context and priorities — the responding parent is invited to share their perspective and priorities to help identify the best resolution.`;
+      }, 1500);
+    }
+
+    function handleIssueSubmit(e) {
+      e.preventDefault();
+      if (validateForm(e.target)) {
+        showToast('Issue submitted! Your co-parent has been notified.', 'success');
+        setTimeout(() => window.location.href = 'dashboard.html', 2000);
+      } else {
+        showToast('Please fill in all required fields', 'error');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — AmicaBull</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <a href="../index.html" class="sidebar-logo">
+        <svg class="logo-icon" viewBox="0 0 40 40" fill="none">
+          <circle cx="14" cy="20" r="10" stroke="currentColor" stroke-width="2.5" fill="none"/>
+          <circle cx="26" cy="20" r="10" stroke="currentColor" stroke-width="2.5" fill="none"/>
+          <path d="M20 13.5C21.5 15.5 22 17.5 22 20C22 22.5 21.5 24.5 20 26.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>AmicaBull</span>
+      </a>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Dashboard
+        </a>
+        <a href="new-issue.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m8-8H4"/></svg>
+          New Issue
+        </a>
+        <a href="#" class="sidebar-link" onclick="showToast('Issues page — coming soon', 'info')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          All Issues
+        </a>
+
+        <span class="sidebar-section">Communication</span>
+        <a href="#" class="sidebar-link" onclick="showToast('Calendar — coming soon', 'info')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          Calendar
+        </a>
+        <a href="#" class="sidebar-link" onclick="showToast('Expenses — coming soon', 'info')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Expenses
+        </a>
+
+        <span class="sidebar-section">Insights</span>
+        <a href="#" class="sidebar-link" onclick="showToast('Flexibility scores page — coming soon', 'info')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          Flexibility Scores
+        </a>
+        <a href="#" class="sidebar-link" onclick="showToast('Export center — coming soon', 'info')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Export Center
+        </a>
+
+        <span class="sidebar-section">Settings</span>
+        <a href="#" class="sidebar-link" onclick="showToast('Settings — coming soon', 'info')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
+          Settings
+        </a>
+      </nav>
+
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">S</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">Sarah Mitchell</div>
+          <div class="sidebar-user-plan">Standard Plan</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Mobile sidebar toggle -->
+      <button class="nav-toggle" id="sidebarToggle" style="display:none;margin-bottom:16px" aria-label="Toggle sidebar">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="page-header">
+        <div>
+          <h1>Dashboard</h1>
+          <p>Welcome back, Sarah. Here's your co-parenting overview.</p>
+        </div>
+        <a href="new-issue.html" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 4v16m8-8H4"/></svg>
+          New Issue
+        </a>
+      </div>
+
+      <!-- Stats -->
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <div class="stat-label">Active Issues</div>
+          <div class="stat-value">3</div>
+          <div class="stat-change positive">1 awaiting response</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Resolved This Month</div>
+          <div class="stat-value">7</div>
+          <div class="stat-change positive">+2 vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Your Flexibility Score</div>
+          <div class="stat-value" style="color:var(--color-success)">78</div>
+          <div class="stat-change positive">Above average</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Co-Parent Score</div>
+          <div class="stat-value" style="color:var(--color-warning)">65</div>
+          <div class="stat-change">Moderate</div>
+        </div>
+      </div>
+
+      <!-- Active Issues -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <h2 style="font-size:20px;font-weight:700">Active Issues</h2>
+        <a href="#" style="font-size:14px;color:var(--color-primary);font-weight:600">View All</a>
+      </div>
+
+      <div class="issues-list">
+        <!-- Issue 1 - Awaiting Response -->
+        <div class="issue-card" onclick="window.location.href='issue-detail.html'">
+          <div class="issue-header">
+            <div class="issue-title">Summer camp schedule — July dates</div>
+            <span class="issue-status pending">Awaiting Response</span>
+          </div>
+          <p style="font-size:14px;color:var(--color-text-secondary);margin-bottom:12px">Need to decide between day camp and sleepaway camp options for both kids during July. Registration deadline is April 15.</p>
+          <div class="issue-meta">
+            <span>Submitted by you</span>
+            <span>Mar 24, 2026</span>
+            <span>Step 1 of 3</span>
+          </div>
+          <div class="issue-progress">
+            <div class="progress-step complete"></div>
+            <div class="progress-step active"></div>
+            <div class="progress-step"></div>
+          </div>
+        </div>
+
+        <!-- Issue 2 - In Progress -->
+        <div class="issue-card" onclick="window.location.href='issue-detail.html'">
+          <div class="issue-header">
+            <div class="issue-title">School pickup schedule change — Wednesdays</div>
+            <span class="issue-status in-progress">AI Review</span>
+          </div>
+          <p style="font-size:14px;color:var(--color-text-secondary);margin-bottom:12px">David requested Wednesday pickup change due to new work schedule. Both submissions complete — AI generating resolution options.</p>
+          <div class="issue-meta">
+            <span>Submitted by co-parent</span>
+            <span>Mar 22, 2026</span>
+            <span>Step 3 of 3</span>
+          </div>
+          <div class="issue-progress">
+            <div class="progress-step complete"></div>
+            <div class="progress-step complete"></div>
+            <div class="progress-step active"></div>
+          </div>
+        </div>
+
+        <!-- Issue 3 - Resolved -->
+        <div class="issue-card" onclick="window.location.href='issue-detail.html'">
+          <div class="issue-header">
+            <div class="issue-title">Spring break travel — passport for Emma</div>
+            <span class="issue-status resolved">Resolved</span>
+          </div>
+          <p style="font-size:14px;color:var(--color-text-secondary);margin-bottom:12px">Agreed on Option A: Sarah takes kids Mar 28 - Apr 2 (domestic), David takes Apr 3-7 (requires passport).</p>
+          <div class="issue-meta">
+            <span>Submitted by you</span>
+            <span>Mar 18, 2026</span>
+            <span>Resolved in 2 days</span>
+          </div>
+          <div class="issue-progress">
+            <div class="progress-step complete"></div>
+            <div class="progress-step complete"></div>
+            <div class="progress-step complete"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flexibility Score Overview -->
+      <div class="flex-score-card" style="margin-top:32px">
+        <h3>Flexibility Score Trend</h3>
+        <p style="font-size:14px;color:var(--color-text-secondary);margin-bottom:20px">
+          Based on compromise acceptance, response timeliness, and resolution engagement over the past 90 days.
+        </p>
+        <div class="flex-score-row">
+          <div class="flex-score-label">You</div>
+          <div class="flex-score-bar">
+            <div class="flex-score-fill high" style="width:78%"></div>
+          </div>
+          <div class="flex-score-value" style="color:var(--color-success)">78</div>
+        </div>
+        <div class="flex-score-row">
+          <div class="flex-score-label">Co-Parent</div>
+          <div class="flex-score-bar">
+            <div class="flex-score-fill medium" style="width:65%"></div>
+          </div>
+          <div class="flex-score-value" style="color:var(--color-warning)">65</div>
+        </div>
+        <p style="font-size:12px;color:var(--color-text-light);margin-top:12px">
+          Scores are calculated from: compromise acceptance rate (40%), response time (20%), engagement quality (20%), and resolution follow-through (20%). This data is available in exported reports.
+        </p>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Mobile sidebar toggle
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    if (window.innerWidth <= 768) {
+      sidebarToggle.style.display = 'flex';
+    }
+    window.addEventListener('resize', () => {
+      sidebarToggle.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
+    });
+    sidebarToggle?.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>
