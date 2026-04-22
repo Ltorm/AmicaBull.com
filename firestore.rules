@@ -1,0 +1,86 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // === USERS ===
+    match /users/{userId} {
+      // Users can read their own profile
+      allow read: if request.auth != null && request.auth.uid == userId;
+      // Users can create their own profile on signup
+      allow create: if request.auth != null && request.auth.uid == userId;
+      // Users can update their own profile (but not flexibilityScore — only Cloud Functions can)
+      allow update: if request.auth != null && request.auth.uid == userId
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['flexibilityScore']));
+
+      // Allow reading co-parent's basic profile (name only, for display)
+      allow read: if request.auth != null
+        && resource.data.coParentId == request.auth.uid;
+
+      // Flexibility history — only Cloud Functions can write
+      match /flexibilityHistory/{entryId} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow write: if false; // Only Cloud Functions
+      }
+    }
+
+    // === ISSUES ===
+    match /issues/{issueId} {
+      // Only the two parents involved can read an issue
+      allow read: if request.auth != null
+        && (resource.data.submittedBy == request.auth.uid
+            || resource.data.coParentId == request.auth.uid);
+
+      // Any authenticated user can create an issue (must be the submitter)
+      allow create: if request.auth != null
+        && request.resource.data.submittedBy == request.auth.uid
+        && request.resource.data.status == 'awaiting_response';
+
+      // Both parents can update issue (for voting, status changes)
+      allow update: if request.auth != null
+        && (resource.data.submittedBy == request.auth.uid
+            || resource.data.coParentId == request.auth.uid);
+
+      // Issues cannot be deleted
+      allow delete: if false;
+
+      // === MESSAGES (immutable) ===
+      match /messages/{messageId} {
+        // Both parents can read messages
+        allow read: if request.auth != null
+          && (get(/databases/$(database)/documents/issues/$(issueId)).data.submittedBy == request.auth.uid
+              || get(/databases/$(database)/documents/issues/$(issueId)).data.coParentId == request.auth.uid);
+
+        // Parents can create messages (but not ai_summary type — only Cloud Functions)
+        allow create: if request.auth != null
+          && request.resource.data.type != 'ai_summary'
+          && request.resource.data.authorId == request.auth.uid;
+
+        // Messages CANNOT be updated or deleted — immutable for legal integrity
+        allow update: if false;
+        allow delete: if false;
+      }
+    }
+
+    // === INVITATIONS ===
+    match /invitations/{invitationId} {
+      // Inviter can read their sent invitations
+      allow read: if request.auth != null
+        && resource.data.inviterId == request.auth.uid;
+
+      // Invitee can read invitations sent to their email
+      allow read: if request.auth != null
+        && resource.data.inviteeEmail == request.auth.token.email;
+
+      // Authenticated users can create invitations
+      allow create: if request.auth != null
+        && request.resource.data.inviterId == request.auth.uid;
+
+      // Invitee can accept (update status)
+      allow update: if request.auth != null
+        && resource.data.inviteeEmail == request.auth.token.email;
+
+      allow delete: if false;
+    }
+  }
+}

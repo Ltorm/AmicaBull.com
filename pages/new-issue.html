@@ -125,13 +125,8 @@
 
           <div class="form-group">
             <label class="form-label">Which children does this involve?</label>
-            <div style="display:flex;gap:12px;flex-wrap:wrap">
-              <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer">
-                <input type="checkbox" value="emma" checked style="accent-color:var(--color-primary)"> Emma (10)
-              </label>
-              <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer">
-                <input type="checkbox" value="noah" checked style="accent-color:var(--color-primary)"> Noah (7)
-              </label>
+            <div id="childrenContainer" style="display:flex;gap:12px;flex-wrap:wrap">
+              <span style="font-size:13px;color:var(--color-text-secondary)">Add children in Settings to see them here</span>
             </div>
           </div>
 
@@ -165,36 +160,105 @@
   </div>
 
   <script src="../js/main.js"></script>
-  <script>
-    function previewReframe() {
-      const title = document.getElementById('title').value;
+  <script type="module">
+    import { requireAuth, getUserProfile } from '../js/auth.js';
+    import { createIssue } from '../js/database.js';
+    import { generateNeutralReframe } from '../js/mediation.js';
+
+    let currentUser = null;
+    let currentProfile = null;
+
+    (async () => {
+      currentUser = await requireAuth();
+      currentProfile = await getUserProfile(currentUser.uid);
+
+      // Populate children checkboxes from profile
+      if (currentProfile?.children?.length) {
+        const container = document.getElementById('childrenContainer');
+        if (container) {
+          container.innerHTML = currentProfile.children.map(c => `
+            <label style="display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer">
+              <input type="checkbox" value="${c.id}" checked style="accent-color:var(--color-primary)"> ${c.name} (${c.age})
+            </label>
+          `).join('');
+        }
+      }
+
+      // Update sidebar
+      if (currentProfile) {
+        document.querySelector('.sidebar-user-name').textContent =
+          `${currentProfile.firstName} ${currentProfile.lastName}`;
+        document.querySelector('.sidebar-avatar').textContent =
+          currentProfile.firstName.charAt(0);
+      }
+    })();
+
+    window.previewReframe = async function() {
       const context = document.getElementById('context').value;
       const preview = document.getElementById('aiPreview');
       const reframeText = document.getElementById('aiReframeText');
 
-      if (!title || !context) {
-        showToast('Please fill in the issue title and context first', 'error');
+      if (!context) {
+        showToast('Please fill in the context first', 'error');
         return;
       }
 
       preview.style.display = 'block';
       reframeText.textContent = 'Analyzing and reframing...';
 
-      // Simulate AI reframe
-      setTimeout(() => {
+      try {
+        const result = await generateNeutralReframe(context);
+        reframeText.textContent = result.reframedText;
+      } catch (err) {
+        // Fallback to client-side reframe if Cloud Function unavailable
+        const title = document.getElementById('title').value;
         reframeText.textContent = `A decision is needed regarding "${title}." Both parents' input is requested on the available options, considering the children's needs, scheduling constraints, and any relevant deadlines. The submitting parent has provided context and priorities — the responding parent is invited to share their perspective and priorities to help identify the best resolution.`;
-      }, 1500);
-    }
-
-    function handleIssueSubmit(e) {
-      e.preventDefault();
-      if (validateForm(e.target)) {
-        showToast('Issue submitted! Your co-parent has been notified.', 'success');
-        setTimeout(() => window.location.href = 'dashboard.html', 2000);
-      } else {
-        showToast('Please fill in all required fields', 'error');
       }
-    }
+    };
+
+    window.handleIssueSubmit = async function(e) {
+      e.preventDefault();
+      if (!validateForm(e.target)) {
+        showToast('Please fill in all required fields', 'error');
+        return;
+      }
+
+      if (!currentProfile?.coParentId) {
+        showToast('Please link a co-parent first (Settings > Invite Co-Parent)', 'error');
+        return;
+      }
+
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      try {
+        const children = [...document.querySelectorAll('input[type="checkbox"]:checked')]
+          .map(cb => cb.value);
+
+        const issueId = await createIssue(
+          currentUser.uid,
+          `${currentProfile.firstName} ${currentProfile.lastName}`,
+          currentProfile.coParentId,
+          {
+            title: document.getElementById('title').value,
+            category: document.getElementById('category').value,
+            context: document.getElementById('context').value,
+            priorities: document.getElementById('priority').value,
+            urgency: document.getElementById('urgency').value,
+            deadline: document.getElementById('deadline').value || null,
+            children
+          }
+        );
+
+        showToast('Issue submitted! Your co-parent has been notified.', 'success');
+        setTimeout(() => window.location.href = `issue-detail.html?id=${issueId}`, 1500);
+      } catch (err) {
+        showToast(err.message || 'Failed to submit issue', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Submit Issue';
+      }
+    };
   </script>
 </body>
 </html>

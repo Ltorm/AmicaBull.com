@@ -209,19 +209,113 @@
   </div>
 
   <script src="../js/main.js"></script>
-  <script>
+  <script type="module">
+    import { requireAuth, getUserProfile, logOut } from '../js/auth.js';
+    import { getIssues } from '../js/database.js';
+    import { getFlexibilityScore } from '../js/database.js';
+
     // Mobile sidebar toggle
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
-    if (window.innerWidth <= 768) {
-      sidebarToggle.style.display = 'flex';
-    }
+    if (window.innerWidth <= 768) sidebarToggle.style.display = 'flex';
     window.addEventListener('resize', () => {
       sidebarToggle.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
     });
-    sidebarToggle?.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-    });
+    sidebarToggle?.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+    // Load real data
+    (async () => {
+      try {
+        const user = await requireAuth();
+        const profile = await getUserProfile(user.uid);
+
+        if (profile) {
+          // Update sidebar user info
+          document.querySelector('.sidebar-user-name').textContent =
+            `${profile.firstName} ${profile.lastName}`;
+          document.querySelector('.sidebar-user-plan').textContent =
+            `${profile.plan.charAt(0).toUpperCase() + profile.plan.slice(1)} Plan`;
+          document.querySelector('.sidebar-avatar').textContent =
+            profile.firstName.charAt(0);
+
+          // Update welcome message
+          document.querySelector('.page-header p').textContent =
+            `Welcome back, ${profile.firstName}. Here's your co-parenting overview.`;
+
+          // Load flexibility scores
+          const myScore = profile.flexibilityScore || 50;
+          document.querySelector('.stat-card:nth-child(3) .stat-value').textContent = myScore;
+
+          if (profile.coParentId) {
+            const coScore = await getFlexibilityScore(profile.coParentId);
+            document.querySelector('.stat-card:nth-child(4) .stat-value').textContent = coScore;
+          }
+        }
+
+        // Load issues
+        const issues = await getIssues(user.uid);
+        const activeIssues = issues.filter(i => !['resolved', 'unresolved'].includes(i.status));
+        const resolvedThisMonth = issues.filter(i => {
+          if (i.status !== 'resolved') return false;
+          const d = i.updatedAt?.toDate?.() || new Date(i.updatedAt);
+          const now = new Date();
+          return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+        });
+
+        document.querySelector('.stat-card:nth-child(1) .stat-value').textContent = activeIssues.length;
+        document.querySelector('.stat-card:nth-child(2) .stat-value').textContent = resolvedThisMonth.length;
+
+        // Render issue cards
+        if (issues.length > 0) {
+          const issuesList = document.querySelector('.issues-list');
+          issuesList.innerHTML = issues.slice(0, 10).map(issue => {
+            const statusClass = {
+              'awaiting_response': 'pending', 'rebuttal_open': 'pending',
+              'ai_review': 'in-progress', 'options_ready': 'in-progress',
+              'resolved': 'resolved', 'unresolved': 'escalated', 'escalated': 'escalated'
+            }[issue.status] || 'pending';
+
+            const statusLabel = {
+              'awaiting_response': 'Awaiting Response', 'rebuttal_open': 'Rebuttal Open',
+              'ai_review': 'AI Review', 'options_ready': 'Vote on Options',
+              'resolved': 'Resolved', 'unresolved': 'Unresolved', 'escalated': 'Escalated'
+            }[issue.status] || issue.status;
+
+            const step = issue.step || 1;
+            const created = issue.createdAt?.toDate?.() ?
+              issue.createdAt.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+
+            return `
+              <div class="issue-card" onclick="window.location.href='issue-detail.html?id=${issue.id}'">
+                <div class="issue-header">
+                  <div class="issue-title">${escapeHTML(issue.title)}</div>
+                  <span class="issue-status ${statusClass}">${statusLabel}</span>
+                </div>
+                <div class="issue-meta">
+                  <span>${issue.category}</span>
+                  <span>${created}</span>
+                  <span>Step ${step} of 3</span>
+                </div>
+                <div class="issue-progress">
+                  <div class="progress-step ${step >= 1 ? 'complete' : ''}"></div>
+                  <div class="progress-step ${step >= 2 ? 'complete' : ''} ${step === 2 ? 'active' : ''}"></div>
+                  <div class="progress-step ${step >= 3 ? 'complete' : ''} ${step === 3 ? 'active' : ''}"></div>
+                </div>
+              </div>`;
+          }).join('');
+        }
+
+      } catch (err) {
+        console.error('Dashboard load error:', err);
+      }
+    })();
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
   </script>
 </body>
 </html>

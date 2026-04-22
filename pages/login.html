@@ -62,16 +62,35 @@
   </div>
 
   <script src="../js/main.js"></script>
-  <script>
-    function handleLogin(e) {
+  <script type="module">
+    import { logIn, redirectIfLoggedIn, getAuthErrorMessage } from '../js/auth.js';
+
+    redirectIfLoggedIn();
+
+    window.handleLogin = async function(e) {
       e.preventDefault();
-      if (validateForm(e.target)) {
-        showToast('Logging in...', 'success');
-        setTimeout(() => window.location.href = 'dashboard.html', 1000);
-      } else {
+      if (!validateForm(e.target)) {
         showToast('Please enter your email and password', 'error');
+        return;
       }
-    }
+
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Logging in...';
+
+      try {
+        await logIn(
+          document.getElementById('email').value,
+          document.getElementById('password').value
+        );
+        showToast('Logged in!', 'success');
+        setTimeout(() => window.location.href = 'dashboard.html', 500);
+      } catch (err) {
+        showToast(getAuthErrorMessage(err.code), 'error');
+        btn.disabled = false;
+        btn.textContent = 'Log In';
+      }
+    };
   </script>
 </body>
 </html>

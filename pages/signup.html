@@ -80,17 +80,38 @@
   </div>
 
   <script src="../js/main.js"></script>
-  <script>
-    function handleSignup(e) {
+  <script type="module">
+    import { signUp, redirectIfLoggedIn, getAuthErrorMessage } from '../js/auth.js';
+
+    redirectIfLoggedIn();
+
+    window.handleSignup = async function(e) {
       e.preventDefault();
-      if (validateForm(e.target)) {
-        // Demo: redirect to dashboard
-        showToast('Account created! Redirecting...', 'success');
-        setTimeout(() => window.location.href = 'dashboard.html', 1500);
-      } else {
+      if (!validateForm(e.target)) {
         showToast('Please fill in all required fields', 'error');
+        return;
       }
-    }
+
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Creating account...';
+
+      try {
+        const user = await signUp(
+          document.getElementById('email').value,
+          document.getElementById('password').value,
+          document.getElementById('firstName').value,
+          document.getElementById('lastName').value,
+          document.getElementById('role').value
+        );
+        showToast('Account created! Redirecting...', 'success');
+        setTimeout(() => window.location.href = 'dashboard.html', 1000);
+      } catch (err) {
+        showToast(getAuthErrorMessage(err.code), 'error');
+        btn.disabled = false;
+        btn.textContent = 'Create Account';
+      }
+    };
   </script>
 </body>
 </html>

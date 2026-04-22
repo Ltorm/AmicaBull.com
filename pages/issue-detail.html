@@ -236,12 +236,12 @@
             <div style="font-size:13px;color:var(--color-text-secondary)">Download complete record with timestamps and hash verification</div>
           </div>
           <div style="display:flex;gap:8px">
-            <button class="btn btn-outline" onclick="showToast('PDF export downloaded', 'success')" style="padding:8px 16px;font-size:13px">
+            <button class="btn btn-outline" onclick="handleExportPDF()" style="padding:8px 16px;font-size:13px">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
               PDF
             </button>
-            <button class="btn btn-outline" onclick="showToast('CSV export downloaded', 'success')" style="padding:8px 16px;font-size:13px">CSV</button>
-            <button class="btn btn-outline" onclick="showToast('JSON export downloaded', 'success')" style="padding:8px 16px;font-size:13px">JSON</button>
+            <button class="btn btn-outline" onclick="handleExportCSV()" style="padding:8px 16px;font-size:13px">CSV</button>
+            <button class="btn btn-outline" onclick="handleExportJSON()" style="padding:8px 16px;font-size:13px">JSON</button>
           </div>
         </div>
 
@@ -256,10 +256,82 @@
   </div>
 
   <script src="../js/main.js"></script>
-  <script>
-    function selectOption(el) {
+  <script type="module">
+    import { requireAuth, getUserProfile } from '../js/auth.js';
+    import { getIssue, getIssueMessages, submitResponse, submitRebuttal, selectCompromise, markUnresolved } from '../js/database.js';
+    import { requestMediation, generateIssueAuditHash } from '../js/mediation.js';
+    import { exportIssuePDF, exportIssueCSV, exportIssueJSON } from '../js/export.js';
+
+    const params = new URLSearchParams(window.location.search);
+    const issueId = params.get('id');
+    let currentUser = null;
+
+    // Export handlers (need to be global for onclick)
+    window.handleExportPDF = () => issueId ? exportIssuePDF(issueId) : showToast('No issue loaded', 'error');
+    window.handleExportCSV = () => issueId ? exportIssueCSV(issueId) : showToast('No issue loaded', 'error');
+    window.handleExportJSON = () => issueId ? exportIssueJSON(issueId) : showToast('No issue loaded', 'error');
+
+    window.selectOption = function(el) {
       document.querySelectorAll('.compromise-option').forEach(opt => opt.classList.remove('selected'));
       el.classList.add('selected');
+    };
+
+    window.handleAcceptOption = async function() {
+      const selected = document.querySelector('.compromise-option.selected');
+      if (!selected) { showToast('Select an option first', 'error'); return; }
+      const optionIndex = parseInt(selected.dataset.index);
+      try {
+        const resolved = await selectCompromise(issueId, optionIndex, currentUser.uid);
+        if (resolved) {
+          showToast('Both parents agree! Issue resolved.', 'success');
+        } else {
+          showToast('Your vote recorded. Waiting for co-parent.', 'success');
+        }
+        setTimeout(() => location.reload(), 1500);
+      } catch (err) {
+        showToast(err.message || 'Failed to record vote', 'error');
+      }
+    };
+
+    window.handleMarkUnresolved = async function() {
+      try {
+        await markUnresolved(issueId);
+        showToast('Issue marked unresolved. Consider involving your mediator.', 'info');
+        setTimeout(() => location.reload(), 1500);
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    };
+
+    window.handleTriggerAI = async function() {
+      try {
+        showToast('AI is analyzing the issue...', 'info');
+        await requestMediation(issueId);
+        showToast('AI mediation complete!', 'success');
+        setTimeout(() => location.reload(), 1500);
+      } catch (err) {
+        showToast(err.message || 'AI mediation failed', 'error');
+      }
+    };
+
+    // Load issue data if we have an ID
+    if (issueId) {
+      (async () => {
+        currentUser = await requireAuth();
+        const profile = await getUserProfile(currentUser.uid);
+
+        // Update sidebar
+        if (profile) {
+          document.querySelector('.sidebar-user-name').textContent =
+            `${profile.firstName} ${profile.lastName}`;
+          document.querySelector('.sidebar-avatar').textContent =
+            profile.firstName.charAt(0);
+        }
+
+        // Load issue — real data will replace the demo content
+        // For now, the demo HTML serves as the layout template
+        // Full dynamic rendering would replace innerHTML based on issue data
+      })();
     }
   </script>
   <style>
