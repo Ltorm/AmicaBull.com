@@ -55,7 +55,9 @@ export async function logIn(email, password) {
  */
 export async function logOut() {
   await signOut(auth);
-  window.location.href = '/pages/login.html';
+  // Relative: auth.js is only loaded from pages/ — absolute paths break
+  // under subpath hosting (github.io) and PWA scope
+  window.location.href = 'login.html';
 }
 
 /**
@@ -97,7 +99,7 @@ export function requireAuth() {
     const unsub = onAuthStateChanged(auth, (user) => {
       unsub();
       if (!user) {
-        window.location.href = '/pages/login.html';
+        window.location.href = 'login.html';
       } else {
         resolve(user);
       }
@@ -113,7 +115,7 @@ export function redirectIfLoggedIn() {
     const unsub = onAuthStateChanged(auth, (user) => {
       unsub();
       if (user) {
-        window.location.href = '/pages/dashboard.html';
+        window.location.href = 'dashboard.html';
       } else {
         resolve();
       }
