@@ -15,10 +15,11 @@ service cloud.firestore {
 
       // Users can create their own profile on signup.
       // coParentId must not be self-assigned — only the acceptInvitation
-      // Cloud Function links accounts.
+      // Cloud Function links accounts. flexibilityScore always starts at 50.
       allow create: if request.auth != null && request.auth.uid == userId
         && (!('coParentId' in request.resource.data)
-            || request.resource.data.coParentId == null);
+            || request.resource.data.coParentId == null)
+        && request.resource.data.get('flexibilityScore', 50) == 50;
 
       // Users can update their own profile, but not:
       //  - flexibilityScore (only the calculateFlexibility Cloud Function)
