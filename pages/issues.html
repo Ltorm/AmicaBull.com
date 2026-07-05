@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Issues — AmicaBull</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#0f1029">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AmicaBull">
+  <script defer src="../js/pwa.js"></script>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <a href="../index.html" class="sidebar-logo">
+        <svg class="logo-icon" viewBox="0 0 40 40" fill="none">
+          <circle cx="14" cy="20" r="10" stroke="currentColor" stroke-width="2.5" fill="none"/>
+          <circle cx="26" cy="20" r="10" stroke="currentColor" stroke-width="2.5" fill="none"/>
+          <path d="M20 13.5C21.5 15.5 22 17.5 22 20C22 22.5 21.5 24.5 20 26.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span>AmicaBull</span>
+      </a>
+
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+          Dashboard
+        </a>
+        <a href="new-issue.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m8-8H4"/></svg>
+          New Issue
+        </a>
+        <a href="issues.html" class="sidebar-link active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          All Issues
+        </a>
+
+        <span class="sidebar-section">Insights</span>
+        <a href="export.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Export Center
+        </a>
+      </nav>
+
+      <div class="sidebar-user">
+        <div class="sidebar-avatar">·</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">Loading…</div>
+          <div class="sidebar-user-plan">Free Plan</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <button class="nav-toggle" id="sidebarToggle" style="display:none;margin-bottom:16px" aria-label="Toggle sidebar">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="page-header">
+        <div>
+          <h1>All Issues</h1>
+          <p>Every issue between you and your co-parent, past and present.</p>
+        </div>
+        <a href="new-issue.html" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 4v16m8-8H4"/></svg>
+          New Issue
+        </a>
+      </div>
+
+      <!-- Filter tabs -->
+      <div id="filterTabs" style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap">
+        <button class="btn btn-primary" data-filter="all" style="padding:8px 18px;font-size:13px">All</button>
+        <button class="btn btn-outline" data-filter="active" style="padding:8px 18px;font-size:13px">Active</button>
+        <button class="btn btn-outline" data-filter="resolved" style="padding:8px 18px;font-size:13px">Resolved</button>
+        <button class="btn btn-outline" data-filter="closed" style="padding:8px 18px;font-size:13px">Unresolved / Escalated</button>
+      </div>
+
+      <div class="issues-list" id="issuesList">
+        <p style="color:var(--color-text-secondary);font-size:14px">Loading issues…</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/main.js"></script>
+  <script type="module">
+    import { requireAuth, getUserProfile } from '../js/auth.js';
+    import { getIssues } from '../js/database.js';
+
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    if (window.innerWidth <= 768) sidebarToggle.style.display = 'flex';
+    window.addEventListener('resize', () => {
+      sidebarToggle.style.display = window.innerWidth <= 768 ? 'flex' : 'none';
+    });
+    sidebarToggle?.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+    const ACTIVE_STATUSES = ['awaiting_response', 'rebuttal_open', 'ai_review', 'options_ready'];
+    let allIssues = [];
+    let currentFilter = 'all';
+
+    function escapeHTML(str) {
+      if (!str) return '';
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    function issueCard(issue) {
+      const statusClass = {
+        'awaiting_response': 'pending', 'rebuttal_open': 'pending',
+        'ai_review': 'in-progress', 'options_ready': 'in-progress',
+        'resolved': 'resolved', 'unresolved': 'escalated', 'escalated': 'escalated'
+      }[issue.status] || 'pending';
+      const statusLabel = {
+        'awaiting_response': 'Awaiting Response', 'rebuttal_open': 'Rebuttal Open',
+        'ai_review': 'AI Review', 'options_ready': 'Vote on Options',
+        'resolved': 'Resolved', 'unresolved': 'Unresolved', 'escalated': 'Escalated'
+      }[issue.status] || issue.status;
+      const step = issue.step || 1;
+      const created = issue.createdAt?.toDate?.() ?
+        issue.createdAt.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+
+      return `
+        <div class="issue-card" onclick="window.location.href='issue-detail.html?id=${issue.id}'">
+          <div class="issue-header">
+            <div class="issue-title">${escapeHTML(issue.title)}</div>
+            <span class="issue-status ${statusClass}">${statusLabel}</span>
+          </div>
+          ${issue.context ? `<p style="font-size:14px;color:var(--color-text-secondary);margin-bottom:12px">${escapeHTML(issue.context.slice(0, 160))}${issue.context.length > 160 ? '…' : ''}</p>` : ''}
+          <div class="issue-meta">
+            <span>${escapeHTML(issue.category || '')}</span>
+            <span>${created}</span>
+            <span>Step ${step} of 3</span>
+          </div>
+          <div class="issue-progress">
+            <div class="progress-step ${step >= 1 ? 'complete' : ''}"></div>
+            <div class="progress-step ${step >= 2 ? 'complete' : ''} ${step === 2 ? 'active' : ''}"></div>
+            <div class="progress-step ${step >= 3 ? 'complete' : ''} ${step === 3 ? 'active' : ''}"></div>
+          </div>
+        </div>`;
+    }
+
+    function render() {
+      const list = document.getElementById('issuesList');
+      const filtered = allIssues.filter(i =>
+        currentFilter === 'all' ? true :
+        currentFilter === 'active' ? ACTIVE_STATUSES.includes(i.status) :
+        currentFilter === 'resolved' ? i.status === 'resolved' :
+        ['unresolved', 'escalated'].includes(i.status));
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="issue-card" style="text-align:center;cursor:default">
+            <p style="font-size:15px;color:var(--color-text-secondary)">
+              ${allIssues.length === 0
+                ? 'No issues yet. When you and your co-parent need to make a decision together, start here.'
+                : 'No issues match this filter.'}
+            </p>
+            ${allIssues.length === 0 ? '<a href="new-issue.html" class="btn btn-primary" style="margin-top:14px">Submit Your First Issue</a>' : ''}
+          </div>`;
+        return;
+      }
+      list.innerHTML = filtered.map(issueCard).join('');
+    }
+
+    document.getElementById('filterTabs').addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-filter]');
+      if (!btn) return;
+      currentFilter = btn.dataset.filter;
+      document.querySelectorAll('#filterTabs button').forEach(b => {
+        b.className = 'btn ' + (b === btn ? 'btn-primary' : 'btn-outline');
+        b.style.cssText = 'padding:8px 18px;font-size:13px';
+      });
+      render();
+    });
+
+    (async () => {
+      try {
+        const user = await requireAuth();
+        const profile = await getUserProfile(user.uid);
+        if (profile) {
+          document.querySelector('.sidebar-user-name').textContent = `${profile.firstName} ${profile.lastName}`;
+          document.querySelector('.sidebar-user-plan').textContent =
+            `${profile.plan.charAt(0).toUpperCase() + profile.plan.slice(1)} Plan`;
+          document.querySelector('.sidebar-avatar').textContent = profile.firstName.charAt(0);
+        }
+        allIssues = await getIssues(user.uid);
+        render();
+      } catch (err) {
+        console.error('Issues load error:', err);
+        document.getElementById('issuesList').innerHTML =
+          '<p style="color:var(--color-danger);font-size:14px">Could not load issues. Please try again.</p>';
+      }
+    })();
+  </script>
+</body>
+</html>

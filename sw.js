@@ -1,6 +1,6 @@
 // ===== AmicaBull Service Worker =====
 // Bump the version to invalidate old caches on deploy
-const CACHE_NAME = 'amicabull-v1';
+const CACHE_NAME = 'amicabull-v2';
 
 const PRECACHE = [
   './',
@@ -19,6 +19,8 @@ const PRECACHE = [
   './pages/dashboard.html',
   './pages/new-issue.html',
   './pages/issue-detail.html',
+  './pages/issues.html',
+  './pages/export.html',
   './pages/privacy.html',
   './pages/terms.html'
 ];

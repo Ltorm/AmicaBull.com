@@ -40,205 +40,46 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m8-8H4"/></svg>
           New Issue
         </a>
-        <a href="#" class="sidebar-link active">
+        <a href="issues.html" class="sidebar-link active">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
           All Issues
         </a>
+        <span class="sidebar-section">Insights</span>
+        <a href="export.html" class="sidebar-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Export Center
+        </a>
       </nav>
       <div class="sidebar-user">
-        <div class="sidebar-avatar">S</div>
+        <div class="sidebar-avatar">·</div>
         <div class="sidebar-user-info">
-          <div class="sidebar-user-name">Sarah Mitchell</div>
-          <div class="sidebar-user-plan">Standard Plan</div>
+          <div class="sidebar-user-name">Loading…</div>
+          <div class="sidebar-user-plan">Free Plan</div>
         </div>
       </div>
     </aside>
 
     <!-- Main Content -->
     <main class="main-content">
-      <div class="issue-detail">
+      <div id="loadingState" style="padding:40px 0;color:var(--color-text-secondary);font-size:14px">
+        Loading issue…
+      </div>
+
+      <div class="issue-detail" id="issueDetail" style="display:none">
         <!-- Back link -->
-        <a href="dashboard.html" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--color-text-secondary);margin-bottom:24px">
+        <a href="issues.html" style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--color-text-secondary);margin-bottom:24px">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-          Back to Dashboard
+          Back to All Issues
         </a>
 
-        <!-- Issue Header -->
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-          <h1 style="font-size:28px;font-weight:700">Summer camp schedule — July dates</h1>
-          <span class="issue-status in-progress" style="margin-top:4px">AI Review</span>
-        </div>
-        <div class="issue-meta" style="margin-bottom:32px">
-          <span>Category: Schedule</span>
-          <span>Children: Emma, Noah</span>
-          <span>Urgency: Medium</span>
-          <span>Deadline: April 15, 2026</span>
-        </div>
-
-        <!-- Progress Steps -->
-        <div style="display:flex;gap:4px;margin-bottom:40px">
-          <div style="flex:1;text-align:center">
-            <div style="height:6px;background:var(--color-primary);border-radius:3px;margin-bottom:8px"></div>
-            <div style="font-size:12px;font-weight:700;color:var(--color-primary)">Issue Submitted</div>
-          </div>
-          <div style="flex:1;text-align:center">
-            <div style="height:6px;background:var(--color-primary);border-radius:3px;margin-bottom:8px"></div>
-            <div style="font-size:12px;font-weight:700;color:var(--color-primary)">Response Received</div>
-          </div>
-          <div style="flex:1;text-align:center">
-            <div style="height:6px;background:var(--color-warning);border-radius:3px;margin-bottom:8px"></div>
-            <div style="font-size:12px;font-weight:700;color:var(--color-warning)">Rebuttal Submitted</div>
-          </div>
-          <div style="flex:1;text-align:center">
-            <div style="height:6px;background:linear-gradient(90deg, var(--color-success), #34d399);border-radius:3px;margin-bottom:8px;animation:pulse 2s infinite"></div>
-            <div style="font-size:12px;font-weight:700;color:var(--color-success)">AI Resolution Ready</div>
-          </div>
-        </div>
-
-        <!-- Conversation Flow -->
-        <div class="issue-flow">
-          <!-- Step 1: Issue Submission -->
-          <div class="flow-item">
-            <div class="flow-line">
-              <div class="flow-dot parent-a">S</div>
-              <div class="flow-connector"></div>
-            </div>
-            <div class="flow-card">
-              <h4>Sarah Mitchell — Issue Submission</h4>
-              <div class="flow-meta">March 22, 2026 at 9:15 AM &bull; Step 1</div>
-              <p>Both kids need summer activities for July. I've been looking at two options: Pinecrest Day Camp (Mon-Fri, 9am-3pm, $1,200/kid) and Camp Wildwood sleepaway (1 week, $2,800/kid). Emma really wants sleepaway but Noah's never been away from home that long. Registration closes April 15th.</p>
-              <div style="margin-top:12px;padding:12px;background:rgba(99,102,241,0.04);border-radius:var(--radius-sm);border-left:3px solid var(--color-primary)">
-                <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-primary);margin-bottom:4px">What matters most</div>
-                <p style="font-size:13px;color:var(--color-text-secondary)">I want the kids to have an outdoor experience this summer. I also need the schedule to work around my July 4th family reunion (July 2-6). Cost is a factor — open to splitting or finding middle ground.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 2: Response -->
-          <div class="flow-item">
-            <div class="flow-line">
-              <div class="flow-dot parent-b">D</div>
-              <div class="flow-connector"></div>
-            </div>
-            <div class="flow-card">
-              <h4>David Mitchell — Response</h4>
-              <div class="flow-meta">March 23, 2026 at 2:30 PM &bull; Step 2</div>
-              <p>I agree the kids need summer activities. I'm concerned about $2,800/kid for sleepaway — that's $5,600 total. Day camp at $2,400 total is more reasonable. Also, Noah told me he's nervous about being away. I'd prefer day camp for both, at least this year. I'm happy to handle drop-off/pickup on my custody days.</p>
-              <div style="margin-top:12px;padding:12px;background:rgba(139,92,246,0.04);border-radius:var(--radius-sm);border-left:3px solid var(--color-accent)">
-                <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-accent);margin-bottom:4px">What matters most</div>
-                <p style="font-size:13px;color:var(--color-text-secondary)">Kids have a fun summer without overspending. Noah shouldn't be forced into sleepaway if he's not ready. I want to be involved in transport on my days.</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 3: Rebuttal -->
-          <div class="flow-item">
-            <div class="flow-line">
-              <div class="flow-dot parent-a">S</div>
-              <div class="flow-connector"></div>
-            </div>
-            <div class="flow-card">
-              <h4>Sarah Mitchell — Rebuttal</h4>
-              <div class="flow-meta">March 24, 2026 at 10:00 AM &bull; Final Rebuttal</div>
-              <p>I hear the concern about Noah and cost. What about a compromise — day camp for Noah and sleepaway for Emma, since she's been asking for a year? That would be $4,000 total instead of $5,600. Emma's old enough and her best friend Maya is going to Wildwood too.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- AI Mediation Summary -->
-        <div class="ai-summary-card">
-          <h3>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-            AI Mediation Summary
-            <span class="ai-badge">AI Generated</span>
-          </h3>
-
-          <div class="ai-section">
-            <h4>Shared Priorities</h4>
-            <p>Both parents agree the children need structured outdoor summer activities. Both prioritize the children's emotional readiness and want to be involved in logistics. Cost-consciousness is shared, though parents differ on acceptable thresholds.</p>
-          </div>
-
-          <div class="ai-section">
-            <h4>Key Points of Agreement</h4>
-            <ul style="list-style:none;padding:0">
-              <li style="padding:6px 0;font-size:14px;color:var(--color-text-secondary);display:flex;align-items:flex-start;gap:8px">
-                <span style="color:var(--color-success);font-weight:700;flex-shrink:0">&#10003;</span>
-                Both want outdoor activities for both children
-              </li>
-              <li style="padding:6px 0;font-size:14px;color:var(--color-text-secondary);display:flex;align-items:flex-start;gap:8px">
-                <span style="color:var(--color-success);font-weight:700;flex-shrink:0">&#10003;</span>
-                Noah may not be ready for sleepaway camp
-              </li>
-              <li style="padding:6px 0;font-size:14px;color:var(--color-text-secondary);display:flex;align-items:flex-start;gap:8px">
-                <span style="color:var(--color-success);font-weight:700;flex-shrink:0">&#10003;</span>
-                Shared transport responsibility is desired
-              </li>
-              <li style="padding:6px 0;font-size:14px;color:var(--color-text-secondary);display:flex;align-items:flex-start;gap:8px">
-                <span style="color:var(--color-success);font-weight:700;flex-shrink:0">&#10003;</span>
-                April 15 registration deadline is acknowledged
-              </li>
-            </ul>
-          </div>
-
-          <div class="ai-section">
-            <h4>Compromise Options</h4>
-            <div class="compromise-options">
-              <div class="compromise-option selected" onclick="selectOption(this)">
-                <div class="option-radio"></div>
-                <div class="option-content">
-                  <div class="option-label recommended">Recommended</div>
-                  <div class="option-text"><strong>Split approach:</strong> Emma attends 1-week sleepaway at Camp Wildwood ($2,800). Noah attends 3 weeks of Pinecrest day camp ($1,200). Total: $4,000, split 50/50 ($2,000 each). Transport shared per custody schedule.</div>
-                </div>
-              </div>
-
-              <div class="compromise-option" onclick="selectOption(this)">
-                <div class="option-radio"></div>
-                <div class="option-content">
-                  <div class="option-label">Option B</div>
-                  <div class="option-text"><strong>Day camp for both + trial overnight:</strong> Both kids do Pinecrest day camp ($2,400 total). Add one 2-night "trial" sleepaway weekend for Noah ($400) to test readiness for next year. Total: $2,800 split evenly.</div>
-                </div>
-              </div>
-
-              <div class="compromise-option" onclick="selectOption(this)">
-                <div class="option-radio"></div>
-                <div class="option-content">
-                  <div class="option-label">Option C</div>
-                  <div class="option-text"><strong>Phased approach:</strong> Both do 2 weeks day camp. Emma does 1 week sleepaway in the 3rd week. Noah does a shorter 3-day camp that week. Total: ~$4,200 split by percentage of custody time.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div style="display:flex;gap:12px;margin-top:24px">
-            <button class="btn btn-primary" onclick="showToast('Your vote has been recorded! Waiting for co-parent.', 'success')">Accept Selected Option</button>
-            <button class="btn btn-outline" onclick="showToast('Issue marked as unresolved. Consider involving your mediator.', 'info')">None Work For Me</button>
-          </div>
-        </div>
-
-        <!-- Flexibility Scores for this Issue -->
-        <div class="flex-score-card">
-          <h3>Flexibility Analysis — This Issue</h3>
-          <div class="flex-score-row">
-            <div class="flex-score-label">Sarah</div>
-            <div class="flex-score-bar">
-              <div class="flex-score-fill high" style="width:85%"></div>
-            </div>
-            <div class="flex-score-value" style="color:var(--color-success)">85</div>
-          </div>
-          <div class="flex-score-row">
-            <div class="flex-score-label">David</div>
-            <div class="flex-score-bar">
-              <div class="flex-score-fill medium" style="width:70%"></div>
-            </div>
-            <div class="flex-score-value" style="color:var(--color-warning)">70</div>
-          </div>
-          <p style="font-size:12px;color:var(--color-text-light);margin-top:12px">
-            Sarah scored higher for offering a compromise in her rebuttal. David scored well for responding promptly and acknowledging cost concerns. Both parents maintained respectful communication throughout.
-          </p>
-        </div>
+        <div id="issueHeader"></div>
+        <div id="progressSteps" style="display:flex;gap:4px;margin-bottom:40px"></div>
+        <div class="issue-flow" id="issueFlow"></div>
+        <div id="actionArea"></div>
+        <div id="aiSummaryArea"></div>
 
         <!-- Export -->
-        <div style="margin-top:24px;padding:20px;background:var(--color-bg-alt);border-radius:var(--radius-md);display:flex;justify-content:space-between;align-items:center">
+        <div style="margin-top:24px;padding:20px;background:var(--color-bg-alt);border-radius:var(--radius-md);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
           <div>
             <div style="font-size:15px;font-weight:700">Export this issue</div>
             <div style="font-size:13px;color:var(--color-text-secondary)">Download complete record with timestamps and hash verification</div>
@@ -256,8 +97,8 @@
         <!-- Audit Hash -->
         <div style="margin-top:16px;padding:16px;background:var(--color-bg-card);border:1px solid var(--color-border-light);border-radius:var(--radius-sm)">
           <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-text-secondary);margin-bottom:4px">Audit Hash</div>
-          <code style="font-size:12px;color:var(--color-text-light);word-break:break-all">sha256:a3f2b8c91d4e5f6789012345abcdef6789012345abcdef6789012345abcdef01</code>
-          <div style="font-size:11px;color:var(--color-text-light);margin-top:4px">This hash verifies that no content in this issue has been modified after submission. Tamper-proof for legal proceedings.</div>
+          <code id="auditHash" style="font-size:12px;color:var(--color-text-light);word-break:break-all">Computing…</code>
+          <div style="font-size:11px;color:var(--color-text-light);margin-top:4px">This hash covers every message hash in this issue. Any modification to the record produces a different value, indicating tampering.</div>
         </div>
       </div>
     </main>
@@ -266,81 +107,397 @@
   <script src="../js/main.js"></script>
   <script type="module">
     import { requireAuth, getUserProfile } from '../js/auth.js';
-    import { getIssue, getIssueMessages, submitResponse, submitRebuttal, selectCompromise, markUnresolved } from '../js/database.js';
+    import { getIssue, getIssueMessages, submitResponse, submitRebuttal, selectCompromise, markUnresolved, escalateIssue } from '../js/database.js';
     import { requestMediation, generateIssueAuditHash } from '../js/mediation.js';
     import { exportIssuePDF, exportIssueCSV, exportIssueJSON } from '../js/export.js';
 
     const params = new URLSearchParams(window.location.search);
     const issueId = params.get('id');
     let currentUser = null;
+    let currentProfile = null;
+    let issue = null;
+    let messages = [];
 
-    // Export handlers (need to be global for onclick)
+    // Export handlers (global for onclick)
     window.handleExportPDF = () => issueId ? exportIssuePDF(issueId) : showToast('No issue loaded', 'error');
     window.handleExportCSV = () => issueId ? exportIssueCSV(issueId) : showToast('No issue loaded', 'error');
     window.handleExportJSON = () => issueId ? exportIssueJSON(issueId) : showToast('No issue loaded', 'error');
 
-    window.selectOption = function(el) {
+    function escapeHTML(str) {
+      if (!str) return '';
+      const d = document.createElement('div');
+      d.textContent = str;
+      return d.innerHTML;
+    }
+
+    function fmtDate(ts) {
+      const d = ts?.toDate?.() || (ts ? new Date(ts) : null);
+      return d ? d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) +
+        ' at ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) : '';
+    }
+
+    const STATUS_LABEL = {
+      'awaiting_response': 'Awaiting Response', 'rebuttal_open': 'Rebuttal Open',
+      'ai_review': 'AI Review', 'options_ready': 'Vote on Options',
+      'resolved': 'Resolved', 'unresolved': 'Unresolved', 'escalated': 'Escalated'
+    };
+    const STATUS_CLASS = {
+      'awaiting_response': 'pending', 'rebuttal_open': 'pending',
+      'ai_review': 'in-progress', 'options_ready': 'in-progress',
+      'resolved': 'resolved', 'unresolved': 'escalated', 'escalated': 'escalated'
+    };
+
+    function renderHeader() {
+      document.getElementById('issueHeader').innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:12px">
+          <h1 style="font-size:28px;font-weight:700">${escapeHTML(issue.title)}</h1>
+          <span class="issue-status ${STATUS_CLASS[issue.status] || 'pending'}" style="margin-top:4px;flex-shrink:0">${STATUS_LABEL[issue.status] || issue.status}</span>
+        </div>
+        <div class="issue-meta" style="margin-bottom:32px">
+          <span>Category: ${escapeHTML(issue.category || '—')}</span>
+          ${issue.children?.length ? `<span>Children: ${escapeHTML(issue.children.join(', '))}</span>` : ''}
+          <span>Urgency: ${escapeHTML(issue.urgency || '—')}</span>
+          ${issue.deadline ? `<span>Deadline: ${escapeHTML(issue.deadline)}</span>` : ''}
+        </div>`;
+    }
+
+    function renderProgress() {
+      const stageIndex = {
+        'awaiting_response': 1, 'rebuttal_open': 2, 'ai_review': 3,
+        'options_ready': 4, 'resolved': 4, 'unresolved': 4, 'escalated': 4
+      }[issue.status] || 1;
+      const labels = ['Issue Submitted', 'Response Received', 'Rebuttal Submitted', 'AI Resolution'];
+      document.getElementById('progressSteps').innerHTML = labels.map((label, i) => {
+        const done = i < stageIndex;
+        const isCurrent = i === stageIndex - 1 && !['resolved'].includes(issue.status);
+        const color = done ? (i === 3 ? 'var(--color-success)' : 'var(--color-primary)') : 'var(--color-border)';
+        return `
+          <div style="flex:1;text-align:center">
+            <div style="height:6px;background:${color};border-radius:3px;margin-bottom:8px${isCurrent && i === 3 ? ';animation:pulse 2s infinite' : ''}"></div>
+            <div style="font-size:12px;font-weight:700;color:${done ? color : 'var(--color-text-light)'}">${label}</div>
+          </div>`;
+      }).join('');
+    }
+
+    function renderFlow() {
+      const typeLabel = { submission: 'Issue Submission', response: 'Response', rebuttal: 'Rebuttal', ai_summary: 'AI Mediation' };
+      document.getElementById('issueFlow').innerHTML = messages
+        .filter(m => m.type !== 'ai_summary') // AI summary gets its own card below
+        .map(m => {
+          const isSubmitterMsg = m.authorId === issue.submittedBy;
+          const initial = (m.authorName || '?').charAt(0).toUpperCase();
+          return `
+            <div class="flow-item">
+              <div class="flow-line">
+                <div class="flow-dot ${isSubmitterMsg ? 'parent-a' : 'parent-b'}">${escapeHTML(initial)}</div>
+                <div class="flow-connector"></div>
+              </div>
+              <div class="flow-card">
+                <h4>${escapeHTML(m.authorName || 'Parent')} — ${typeLabel[m.type] || m.type}</h4>
+                <div class="flow-meta">${fmtDate(m.timestamp)}</div>
+                <p>${escapeHTML(m.content || '')}</p>
+                ${m.priorities ? `
+                  <div style="margin-top:12px;padding:12px;background:rgba(99,102,241,0.04);border-radius:var(--radius-sm);border-left:3px solid var(--color-primary)">
+                    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-primary);margin-bottom:4px">What matters most</div>
+                    <p style="font-size:13px;color:var(--color-text-secondary)">${escapeHTML(m.priorities)}</p>
+                  </div>` : ''}
+                ${m.hash ? `<div style="margin-top:10px;font-size:10px;color:var(--color-text-light);font-family:monospace;word-break:break-all">Hash: ${escapeHTML(m.hash)}</div>` : ''}
+              </div>
+            </div>`;
+        }).join('');
+    }
+
+    function textForm({ heading, hint, withPriorities, submitLabel, onSubmit }) {
+      const area = document.getElementById('actionArea');
+      area.innerHTML = `
+        <div class="flex-score-card" style="margin-top:8px">
+          <h3>${heading}</h3>
+          <p style="font-size:14px;color:var(--color-text-secondary);margin:10px 0 16px">${hint}</p>
+          <form id="actionForm">
+            <div class="form-group">
+              <textarea class="form-textarea" id="actionText" rows="5" required
+                placeholder="Keep it factual and focused on the children's needs…"></textarea>
+            </div>
+            ${withPriorities ? `
+            <div class="form-group">
+              <label class="form-label" for="actionPriorities">What matters most to you here?</label>
+              <input class="form-input" type="text" id="actionPriorities" placeholder="Your key priorities (helps the AI find fair options)">
+            </div>` : ''}
+            <button class="btn btn-primary" type="submit">${submitLabel}</button>
+          </form>
+        </div>`;
+      document.getElementById('actionForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const text = document.getElementById('actionText').value.trim();
+        if (!text) return;
+        const priorities = withPriorities ? document.getElementById('actionPriorities').value.trim() : null;
+        const btn = e.target.querySelector('button');
+        btn.disabled = true;
+        btn.textContent = 'Submitting…';
+        try {
+          await onSubmit(text, priorities);
+        } catch (err) {
+          btn.disabled = false;
+          btn.textContent = submitLabel;
+          showToast(err.message || 'Something went wrong', 'error');
+        }
+      });
+    }
+
+    function banner(html) {
+      document.getElementById('actionArea').innerHTML = `
+        <div class="flex-score-card" style="margin-top:8px">${html}</div>`;
+    }
+
+    function renderAction() {
+      const isSubmitter = currentUser.uid === issue.submittedBy;
+      const myName = currentProfile ? `${currentProfile.firstName} ${currentProfile.lastName}` : 'Parent';
+      const otherName = escapeHTML(isSubmitter ? 'your co-parent' : (issue.submitterName || 'your co-parent'));
+
+      switch (issue.status) {
+        case 'awaiting_response':
+          if (isSubmitter) {
+            banner(`<h3>Waiting for a response</h3>
+              <p style="font-size:14px;color:var(--color-text-secondary);margin-top:10px">
+              Your issue has been submitted. ${otherName} will be able to respond with their perspective and priorities.</p>`);
+          } else {
+            textForm({
+              heading: 'Your Response',
+              hint: `${otherName} submitted this issue. Share your perspective — the AI mediator weighs both sides equally.`,
+              withPriorities: true,
+              submitLabel: 'Submit Response',
+              onSubmit: async (text, priorities) => {
+                await submitResponse(issueId, currentUser.uid, myName, text, priorities || '');
+                showToast('Response submitted', 'success');
+                setTimeout(() => location.reload(), 1000);
+              }
+            });
+          }
+          break;
+
+        case 'rebuttal_open':
+          if (isSubmitter) {
+            textForm({
+              heading: 'Your Rebuttal (final word before AI mediation)',
+              hint: 'Respond to your co-parent’s points. After this, the AI mediator analyzes both positions and proposes compromise options.',
+              withPriorities: false,
+              submitLabel: 'Submit Rebuttal & Request AI Mediation',
+              onSubmit: async (text) => {
+                await submitRebuttal(issueId, currentUser.uid, myName, text);
+                showToast('Rebuttal submitted — AI is analyzing the issue…', 'info');
+                try {
+                  await requestMediation(issueId);
+                  showToast('AI mediation complete!', 'success');
+                } catch (err) {
+                  console.error('Mediation failed:', err);
+                  showToast('Rebuttal saved, but AI mediation failed — you can retry from this page.', 'error');
+                }
+                setTimeout(() => location.reload(), 1200);
+              }
+            });
+          } else {
+            banner(`<h3>Rebuttal in progress</h3>
+              <p style="font-size:14px;color:var(--color-text-secondary);margin-top:10px">
+              Your response was recorded. ${otherName} may add a final rebuttal, then the AI mediator will propose compromise options.</p>`);
+          }
+          break;
+
+        case 'ai_review':
+          banner(`<h3>Ready for AI mediation</h3>
+            <p style="font-size:14px;color:var(--color-text-secondary);margin:10px 0 16px">
+            Both sides are in. The AI mediator will summarize the positions neutrally and propose three compromise options.</p>
+            <button class="btn btn-primary" id="triggerAiBtn">Generate AI Resolution</button>`);
+          document.getElementById('triggerAiBtn').addEventListener('click', async (e) => {
+            e.target.disabled = true;
+            e.target.textContent = 'AI is analyzing…';
+            try {
+              await requestMediation(issueId);
+              showToast('AI mediation complete!', 'success');
+              setTimeout(() => location.reload(), 1000);
+            } catch (err) {
+              e.target.disabled = false;
+              e.target.textContent = 'Generate AI Resolution';
+              showToast(err.message || 'AI mediation failed', 'error');
+            }
+          });
+          break;
+
+        case 'options_ready':
+          // Voting UI is rendered with the AI summary card
+          break;
+
+        case 'resolved': {
+          const opt = issue.mediationData?.compromiseOptions?.[issue.resolvedOption];
+          banner(`<h3 style="color:var(--color-success)">Resolved &#10003;</h3>
+            <p style="font-size:14px;color:var(--color-text-secondary);margin-top:10px">
+            Both parents agreed${opt ? ` on <strong>${escapeHTML(opt.label)}</strong>: ${escapeHTML(opt.description)}` : '.'}
+            </p>`);
+          break;
+        }
+
+        case 'unresolved':
+          banner(`<h3 style="color:var(--color-warning)">Unresolved</h3>
+            <p style="font-size:14px;color:var(--color-text-secondary);margin:10px 0 16px">
+            No compromise was accepted. You can escalate this issue to bring in a professional mediator or attorney,
+            and export the full record below.</p>
+            <button class="btn btn-outline" id="escalateBtn">Escalate Issue</button>`);
+          document.getElementById('escalateBtn').addEventListener('click', async (e) => {
+            e.target.disabled = true;
+            try {
+              await escalateIssue(issueId);
+              showToast('Issue escalated', 'info');
+              setTimeout(() => location.reload(), 1000);
+            } catch (err) {
+              e.target.disabled = false;
+              showToast(err.message, 'error');
+            }
+          });
+          break;
+
+        case 'escalated':
+          banner(`<h3 style="color:var(--color-danger)">Escalated</h3>
+            <p style="font-size:14px;color:var(--color-text-secondary);margin-top:10px">
+            This issue has been escalated. Export the complete, hash-verified record below to share with your mediator or attorney.</p>`);
+          break;
+      }
+    }
+
+    function renderAiSummary() {
+      const md = issue.mediationData;
+      const area = document.getElementById('aiSummaryArea');
+      if (!md) { area.innerHTML = ''; return; }
+
+      const voting = issue.status === 'options_ready';
+      const myVote = (issue.votes || {})[currentUser.uid];
+      const coParentVoted = Object.keys(issue.votes || {}).some(uid => uid !== currentUser.uid);
+
+      const optionsHTML = (md.compromiseOptions || []).map((opt, i) => {
+        const chosen = issue.status === 'resolved' && issue.resolvedOption === i;
+        const mine = myVote === i;
+        return `
+          <div class="compromise-option ${mine || chosen ? 'selected' : ''}" data-index="${i}" ${voting ? 'onclick="selectOption(this)"' : ''} ${!voting ? 'style="cursor:default"' : ''}>
+            <div class="option-radio"></div>
+            <div class="option-content">
+              <div class="option-label ${opt.label === 'Recommended' ? 'recommended' : ''}">${escapeHTML(opt.label)}${chosen ? ' — Agreed' : ''}${voting && mine ? ' — Your vote' : ''}</div>
+              <div class="option-text">${escapeHTML(opt.description)}</div>
+            </div>
+          </div>`;
+      }).join('');
+
+      area.innerHTML = `
+        <div class="ai-summary-card">
+          <h3>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+            AI Mediation Summary
+            <span class="ai-badge">AI Generated</span>
+          </h3>
+          <div class="ai-section">
+            <h4>Summary</h4>
+            <p>${escapeHTML(md.summary || '')}</p>
+          </div>
+          ${md.sharedPriorities ? `
+          <div class="ai-section">
+            <h4>Shared Priorities</h4>
+            <p>${escapeHTML(md.sharedPriorities)}</p>
+          </div>` : ''}
+          ${md.agreements?.length ? `
+          <div class="ai-section">
+            <h4>Key Points of Agreement</h4>
+            <ul style="list-style:none;padding:0">
+              ${md.agreements.map(a => `
+                <li style="padding:6px 0;font-size:14px;color:var(--color-text-secondary);display:flex;align-items:flex-start;gap:8px">
+                  <span style="color:var(--color-success);font-weight:700;flex-shrink:0">&#10003;</span>
+                  ${escapeHTML(a)}
+                </li>`).join('')}
+            </ul>
+          </div>` : ''}
+          <div class="ai-section">
+            <h4>Compromise Options</h4>
+            <div class="compromise-options">${optionsHTML}</div>
+          </div>
+          ${voting ? `
+          <div style="margin-top:8px;font-size:13px;color:var(--color-text-secondary)">
+            ${myVote !== undefined
+              ? 'You voted — waiting for your co-parent. You can change your vote by selecting another option.'
+              : (coParentVoted ? 'Your co-parent has voted. Pick the option you can live with.' : 'Pick the option you can live with — when you both choose the same one, the issue resolves.')}
+          </div>
+          <div style="display:flex;gap:12px;margin-top:16px">
+            <button class="btn btn-primary" onclick="handleAcceptOption()">Accept Selected Option</button>
+            <button class="btn btn-outline" onclick="handleMarkUnresolved()">None Work For Me</button>
+          </div>` : ''}
+        </div>`;
+    }
+
+    window.selectOption = function (el) {
       document.querySelectorAll('.compromise-option').forEach(opt => opt.classList.remove('selected'));
       el.classList.add('selected');
     };
 
-    window.handleAcceptOption = async function() {
+    window.handleAcceptOption = async function () {
       const selected = document.querySelector('.compromise-option.selected');
       if (!selected) { showToast('Select an option first', 'error'); return; }
       const optionIndex = parseInt(selected.dataset.index);
       try {
         const resolved = await selectCompromise(issueId, optionIndex, currentUser.uid);
-        if (resolved) {
-          showToast('Both parents agree! Issue resolved.', 'success');
-        } else {
-          showToast('Your vote recorded. Waiting for co-parent.', 'success');
-        }
-        setTimeout(() => location.reload(), 1500);
+        showToast(resolved ? 'Both parents agree! Issue resolved.' : 'Your vote recorded. Waiting for co-parent.', 'success');
+        setTimeout(() => location.reload(), 1200);
       } catch (err) {
         showToast(err.message || 'Failed to record vote', 'error');
       }
     };
 
-    window.handleMarkUnresolved = async function() {
+    window.handleMarkUnresolved = async function () {
       try {
         await markUnresolved(issueId);
         showToast('Issue marked unresolved. Consider involving your mediator.', 'info');
-        setTimeout(() => location.reload(), 1500);
+        setTimeout(() => location.reload(), 1200);
       } catch (err) {
         showToast(err.message, 'error');
       }
     };
 
-    window.handleTriggerAI = async function() {
-      try {
-        showToast('AI is analyzing the issue...', 'info');
-        await requestMediation(issueId);
-        showToast('AI mediation complete!', 'success');
-        setTimeout(() => location.reload(), 1500);
-      } catch (err) {
-        showToast(err.message || 'AI mediation failed', 'error');
+    (async () => {
+      if (!issueId) {
+        window.location.href = 'issues.html';
+        return;
       }
-    };
-
-    // Load issue data if we have an ID
-    if (issueId) {
-      (async () => {
+      try {
         currentUser = await requireAuth();
-        const profile = await getUserProfile(currentUser.uid);
+        currentProfile = await getUserProfile(currentUser.uid);
 
-        // Update sidebar
-        if (profile) {
+        if (currentProfile) {
           document.querySelector('.sidebar-user-name').textContent =
-            `${profile.firstName} ${profile.lastName}`;
-          document.querySelector('.sidebar-avatar').textContent =
-            profile.firstName.charAt(0);
+            `${currentProfile.firstName} ${currentProfile.lastName}`;
+          document.querySelector('.sidebar-user-plan').textContent =
+            `${currentProfile.plan.charAt(0).toUpperCase() + currentProfile.plan.slice(1)} Plan`;
+          document.querySelector('.sidebar-avatar').textContent = currentProfile.firstName.charAt(0);
         }
 
-        // Load issue — real data will replace the demo content
-        // For now, the demo HTML serves as the layout template
-        // Full dynamic rendering would replace innerHTML based on issue data
-      })();
-    }
+        [issue, messages] = await Promise.all([getIssue(issueId), getIssueMessages(issueId)]);
+        if (!issue) {
+          document.getElementById('loadingState').textContent = 'Issue not found.';
+          return;
+        }
+
+        renderHeader();
+        renderProgress();
+        renderFlow();
+        renderAction();
+        renderAiSummary();
+
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('issueDetail').style.display = 'block';
+
+        // Audit hash (async, after page shows)
+        generateIssueAuditHash(messages)
+          .then(h => { document.getElementById('auditHash').textContent = h; })
+          .catch(() => { document.getElementById('auditHash').textContent = 'Unavailable'; });
+      } catch (err) {
+        console.error('Issue load error:', err);
+        document.getElementById('loadingState').textContent =
+          'Could not load this issue. You may not have access to it.';
+      }
+    })();
   </script>
   <style>
     @keyframes pulse {
