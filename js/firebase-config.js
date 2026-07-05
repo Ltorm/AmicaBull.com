@@ -11,12 +11,13 @@ import { getFunctions, connectFunctionsEmulator } from 'https://www.gstatic.com/
 // Project Settings > General > Your apps > Web app
 // =====================================================
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY_HERE",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCmHVCQNwVRnfPxSTjY8NouPxJptygOjCU",
+  authDomain: "amicabull-ec499.firebaseapp.com",
+  projectId: "amicabull-ec499",
+  storageBucket: "amicabull-ec499.firebasestorage.app",
+  messagingSenderId: "516537981821",
+  appId: "1:516537981821:web:0deb1c0a8eb542e130ca14",
+  measurementId: "G-STM3MS013Y"
 };
 
 const app = initializeApp(firebaseConfig);
