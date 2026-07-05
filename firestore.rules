@@ -7,15 +7,25 @@ service cloud.firestore {
     match /users/{userId} {
       // Users can read their own profile
       allow read: if request.auth != null && request.auth.uid == userId;
-      // Users can create their own profile on signup
-      allow create: if request.auth != null && request.auth.uid == userId;
-      // Users can update their own profile (but not flexibilityScore — only Cloud Functions can)
-      allow update: if request.auth != null && request.auth.uid == userId
-        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['flexibilityScore']));
 
-      // Allow reading co-parent's basic profile (name only, for display)
+      // Co-parent can read the full profile (names, flexibility score are
+      // displayed to the other parent by design)
       allow read: if request.auth != null
         && resource.data.coParentId == request.auth.uid;
+
+      // Users can create their own profile on signup.
+      // coParentId must not be self-assigned — only the acceptInvitation
+      // Cloud Function links accounts.
+      allow create: if request.auth != null && request.auth.uid == userId
+        && (!('coParentId' in request.resource.data)
+            || request.resource.data.coParentId == null);
+
+      // Users can update their own profile, but not:
+      //  - flexibilityScore (only the calculateFlexibility Cloud Function)
+      //  - coParentId (only the acceptInvitation Cloud Function)
+      allow update: if request.auth != null && request.auth.uid == userId
+        && !request.resource.data.diff(resource.data).affectedKeys()
+            .hasAny(['flexibilityScore', 'coParentId']);
 
       // Flexibility history — only Cloud Functions can write
       match /flexibilityHistory/{entryId} {
@@ -26,20 +36,84 @@ service cloud.firestore {
 
     // === ISSUES ===
     match /issues/{issueId} {
-      // Only the two parents involved can read an issue
-      allow read: if request.auth != null
-        && (resource.data.submittedBy == request.auth.uid
-            || resource.data.coParentId == request.auth.uid);
 
-      // Any authenticated user can create an issue (must be the submitter)
+      function isParticipant() {
+        return request.auth != null
+          && (resource.data.submittedBy == request.auth.uid
+              || resource.data.coParentId == request.auth.uid);
+      }
+
+      function affected() {
+        return request.resource.data.diff(resource.data).affectedKeys();
+      }
+
+      function statusUnchanged() {
+        return request.resource.data.status == resource.data.status;
+      }
+
+      function transition(from, to) {
+        return resource.data.status == from
+          && request.resource.data.status == to;
+      }
+
+      // A parent may only ever write their OWN vote
+      function votesOwnKeyOnly() {
+        return !affected().hasAny(['votes'])
+          || request.resource.data.votes.diff(resource.data.votes)
+              .affectedKeys().hasOnly([request.auth.uid]);
+      }
+
+      // Resolution requires both parents' votes present and equal,
+      // and resolvedOption must match the agreed vote
+      function bothVotedSame() {
+        return request.resource.data.votes[resource.data.submittedBy]
+            == request.resource.data.votes[resource.data.coParentId]
+          && request.resource.data.resolvedOption
+            == request.resource.data.votes[request.auth.uid];
+      }
+
+      // Status may only move along the legal flow, by the right parent.
+      // ai_review -> options_ready is done by the aiMediate Cloud Function
+      // (admin SDK, bypasses rules).
+      function validTransition() {
+        return statusUnchanged()
+          || (transition('awaiting_response', 'rebuttal_open')
+              && request.auth.uid == resource.data.coParentId)
+          || (transition('rebuttal_open', 'ai_review')
+              && request.auth.uid == resource.data.submittedBy)
+          || (transition('options_ready', 'resolved') && bothVotedSame())
+          || transition('options_ready', 'unresolved')
+          || transition('options_ready', 'escalated')
+          || transition('unresolved', 'escalated');
+      }
+
+      // resolvedOption can only be set as part of resolving
+      function resolvedOptionRule() {
+        return !affected().hasAny(['resolvedOption'])
+          || transition('options_ready', 'resolved');
+      }
+
+      // Only the two parents involved can read an issue
+      allow read: if isParticipant();
+
+      // Any authenticated user can create an issue (must be the submitter,
+      // in the initial state, with no pre-seeded votes or AI output)
       allow create: if request.auth != null
         && request.resource.data.submittedBy == request.auth.uid
-        && request.resource.data.status == 'awaiting_response';
+        && request.resource.data.status == 'awaiting_response'
+        && request.resource.data.votes == {}
+        && !('mediationData' in request.resource.data)
+        && request.resource.data.resolvedOption == null;
 
-      // Both parents can update issue (for voting, status changes)
-      allow update: if request.auth != null
-        && (resource.data.submittedBy == request.auth.uid
-            || resource.data.coParentId == request.auth.uid);
+      // Parents can only touch workflow fields, only their own vote, and
+      // only valid status transitions. mediationData, submittedBy and
+      // coParentId are never client-writable — mediation output and
+      // participants are tamper-proof.
+      allow update: if isParticipant()
+        && affected().hasOnly(['status', 'step', 'votes', 'resolvedOption', 'updatedAt'])
+        && votesOwnKeyOnly()
+        && validTransition()
+        && resolvedOptionRule();
 
       // Issues cannot be deleted
       allow delete: if false;
@@ -72,13 +146,15 @@ service cloud.firestore {
       allow read: if request.auth != null
         && resource.data.inviteeEmail == request.auth.token.email;
 
-      // Authenticated users can create invitations
+      // Authenticated users can create invitations (as themselves, pending)
       allow create: if request.auth != null
-        && request.resource.data.inviterId == request.auth.uid;
+        && request.resource.data.inviterId == request.auth.uid
+        && request.resource.data.status == 'pending';
 
-      // Invitee can accept (update status)
-      allow update: if request.auth != null
-        && resource.data.inviteeEmail == request.auth.token.email;
+      // Invitations are only updated by the acceptInvitation Cloud Function
+      // (linking accounts requires writing both user docs, which clients
+      // cannot do)
+      allow update: if false;
 
       allow delete: if false;
     }

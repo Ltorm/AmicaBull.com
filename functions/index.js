@@ -195,6 +195,58 @@ exports.aiReframe = onCall(
 );
 
 // =====================================================
+// ACCEPT INVITATION — Links two co-parent accounts
+// (clients cannot write each other's user docs or coParentId,
+// so linking must happen here)
+// =====================================================
+exports.acceptInvitation = onCall(async (request) => {
+  if (!request.auth) {
+    throw new HttpsError("unauthenticated", "Must be logged in.");
+  }
+
+  const { invitationId } = request.data;
+  if (!invitationId) {
+    throw new HttpsError("invalid-argument", "invitationId is required.");
+  }
+
+  const acceptorId = request.auth.uid;
+  const invRef = db.doc(`invitations/${invitationId}`);
+  const invSnap = await invRef.get();
+
+  if (!invSnap.exists) {
+    throw new HttpsError("not-found", "Invitation not found.");
+  }
+
+  const inv = invSnap.data();
+  if (inv.status !== "pending") {
+    throw new HttpsError("failed-precondition", "Invitation is no longer pending.");
+  }
+  if ((inv.inviteeEmail || "").toLowerCase() !== (request.auth.token.email || "").toLowerCase()) {
+    throw new HttpsError("permission-denied", "This invitation was not sent to you.");
+  }
+  if (inv.inviterId === acceptorId) {
+    throw new HttpsError("failed-precondition", "You cannot accept your own invitation.");
+  }
+
+  const batch = db.batch();
+  batch.update(db.doc(`users/${inv.inviterId}`), {
+    coParentId: acceptorId,
+    updatedAt: FieldValue.serverTimestamp()
+  });
+  batch.update(db.doc(`users/${acceptorId}`), {
+    coParentId: inv.inviterId,
+    updatedAt: FieldValue.serverTimestamp()
+  });
+  batch.update(invRef, {
+    status: "accepted",
+    acceptedAt: FieldValue.serverTimestamp()
+  });
+  await batch.commit();
+
+  return { linked: true, coParentId: inv.inviterId };
+});
+
+// =====================================================
 // CALCULATE FLEXIBILITY — Triggered on issue resolution
 // =====================================================
 exports.calculateFlexibility = onDocumentUpdated(

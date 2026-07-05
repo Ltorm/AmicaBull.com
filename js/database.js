@@ -1,10 +1,11 @@
 // ===== Firestore Database Module =====
 
-import { db } from './firebase-config.js';
+import { db, functions } from './firebase-config.js';
 import {
   collection, doc, addDoc, getDoc, getDocs, updateDoc, setDoc,
   query, where, orderBy, serverTimestamp, Timestamp, or
 } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js';
+import { httpsCallable } from 'https://www.gstatic.com/firebasejs/11.8.1/firebase-functions.js';
 import { generateHash } from './mediation.js';
 
 // =====================================================
@@ -147,11 +148,12 @@ export async function selectCompromise(issueId, optionIndex, userId) {
   const issueRef = doc(db, 'issues', issueId);
   const issue = await getIssue(issueId);
 
-  const votes = issue.votes || {};
-  votes[userId] = optionIndex;
+  const votes = { ...(issue.votes || {}), [userId]: optionIndex };
 
+  // Security rules only allow a parent to write their own vote key,
+  // so update the single field rather than replacing the whole map
   const update = {
-    votes,
+    [`votes.${userId}`]: optionIndex,
     updatedAt: serverTimestamp()
   };
 
@@ -254,29 +256,14 @@ export async function getPendingInvitations(email) {
 }
 
 /**
- * Accept a co-parent invitation — links both accounts
+ * Accept a co-parent invitation — links both accounts.
+ * Done via Cloud Function: clients cannot write each other's user docs
+ * or coParentId (security rules), so linking happens server-side.
  */
-export async function acceptInvitation(invitationId, acceptorId) {
-  const invSnap = await getDoc(doc(db, 'invitations', invitationId));
-  if (!invSnap.exists()) throw new Error('Invitation not found');
-
-  const inv = invSnap.data();
-
-  // Link both users
-  await updateDoc(doc(db, 'users', inv.inviterId), {
-    coParentId: acceptorId,
-    updatedAt: serverTimestamp()
-  });
-  await updateDoc(doc(db, 'users', acceptorId), {
-    coParentId: inv.inviterId,
-    updatedAt: serverTimestamp()
-  });
-
-  // Mark invitation as accepted
-  await updateDoc(doc(db, 'invitations', invitationId), {
-    status: 'accepted',
-    acceptedAt: serverTimestamp()
-  });
+export async function acceptInvitation(invitationId) {
+  const accept = httpsCallable(functions, 'acceptInvitation');
+  const result = await accept({ invitationId });
+  return result.data;
 }
 
 // =====================================================
