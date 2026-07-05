@@ -256,6 +256,19 @@ export async function getPendingInvitations(email) {
 }
 
 /**
+ * Get pending invitations sent by a user (to show "waiting" state)
+ */
+export async function getSentInvitations(userId) {
+  const q = query(
+    collection(db, 'invitations'),
+    where('inviterId', '==', userId),
+    where('status', '==', 'pending')
+  );
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+/**
  * Accept a co-parent invitation — links both accounts.
  * Done via Cloud Function: clients cannot write each other's user docs
  * or coParentId (security rules), so linking happens server-side.

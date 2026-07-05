@@ -124,6 +124,9 @@
         </div>
       </div>
 
+      <!-- Co-Parent Link Card (populated by JS when not yet linked) -->
+      <div class="flex-score-card" id="coParentCard" style="display:none;margin-bottom:32px"></div>
+
       <!-- Active Issues -->
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
         <h2 style="font-size:20px;font-weight:700">Active Issues</h2>
@@ -219,8 +222,10 @@
   <script src="../js/main.js"></script>
   <script type="module">
     import { requireAuth, getUserProfile, logOut } from '../js/auth.js';
-    import { getIssues } from '../js/database.js';
-    import { getFlexibilityScore } from '../js/database.js';
+    import {
+      getIssues, getFlexibilityScore, inviteCoParent,
+      getPendingInvitations, getSentInvitations, acceptInvitation
+    } from '../js/database.js';
 
     // Mobile sidebar toggle
     const sidebarToggle = document.getElementById('sidebarToggle');
@@ -253,11 +258,19 @@
           // Load flexibility scores
           const myScore = profile.flexibilityScore || 50;
           document.querySelector('.stat-card:nth-child(3) .stat-value').textContent = myScore;
+          setScoreRow(0, myScore);
 
           if (profile.coParentId) {
             const coScore = await getFlexibilityScore(profile.coParentId);
             document.querySelector('.stat-card:nth-child(4) .stat-value').textContent = coScore;
+            setScoreRow(1, coScore);
+          } else {
+            document.querySelector('.stat-card:nth-child(4) .stat-value').textContent = '—';
+            setScoreRow(1, 0, '—');
           }
+
+          // Co-parent invite/accept card
+          await renderCoParentCard(user, profile);
         }
 
         // Load issues
@@ -273,8 +286,16 @@
         document.querySelector('.stat-card:nth-child(1) .stat-value').textContent = activeIssues.length;
         document.querySelector('.stat-card:nth-child(2) .stat-value').textContent = resolvedThisMonth.length;
 
-        // Render issue cards
-        if (issues.length > 0) {
+        // Render issue cards (or a friendly empty state — never the demo data)
+        if (issues.length === 0) {
+          document.querySelector('.issues-list').innerHTML = `
+            <div class="issue-card" style="text-align:center;cursor:default">
+              <p style="font-size:15px;color:var(--color-text-secondary)">
+                No issues yet. When you and your co-parent need to make a decision together, start here.
+              </p>
+              <a href="new-issue.html" class="btn btn-primary" style="margin-top:14px">Submit Your First Issue</a>
+            </div>`;
+        } else {
           const issuesList = document.querySelector('.issues-list');
           issuesList.innerHTML = issues.slice(0, 10).map(issue => {
             const statusClass = {
@@ -323,6 +344,90 @@
       const d = document.createElement('div');
       d.textContent = str;
       return d.innerHTML;
+    }
+
+    // Update a Flexibility Score Trend row (0 = You, 1 = Co-Parent)
+    function setScoreRow(index, score, label) {
+      const row = document.querySelectorAll('.flex-score-row')[index];
+      if (!row) return;
+      const fill = row.querySelector('.flex-score-fill');
+      fill.style.width = score + '%';
+      fill.className = 'flex-score-fill ' + (score >= 70 ? 'high' : score >= 45 ? 'medium' : 'low');
+      row.querySelector('.flex-score-value').textContent = label ?? score;
+    }
+
+    // Co-parent card: invite form / waiting state / incoming invitation
+    async function renderCoParentCard(user, profile) {
+      const card = document.getElementById('coParentCard');
+      if (!card || profile.coParentId) return;
+
+      const show = (html) => { card.innerHTML = html; card.style.display = 'block'; };
+      const sub = 'font-size:14px;color:var(--color-text-secondary);margin:10px 0 16px';
+
+      // 1. Someone invited me → accept
+      const received = await getPendingInvitations(user.email || '');
+      if (received.length > 0) {
+        const inv = received[0];
+        show(`
+          <h3>Co-Parent Invitation</h3>
+          <p style="${sub}"><strong>${escapeHTML(inv.inviterName || 'Your co-parent')}</strong>
+            invited you to connect. Linking accounts lets you submit and resolve issues together.</p>
+          <button class="btn btn-primary" id="acceptInviteBtn">Accept Invitation</button>`);
+        document.getElementById('acceptInviteBtn').addEventListener('click', async (e) => {
+          e.target.disabled = true;
+          e.target.textContent = 'Linking…';
+          try {
+            await acceptInvitation(inv.id);
+            showToast('Accounts linked!', 'success');
+            setTimeout(() => window.location.reload(), 1000);
+          } catch (err) {
+            e.target.disabled = false;
+            e.target.textContent = 'Accept Invitation';
+            showToast(err.message || 'Could not accept invitation', 'error');
+          }
+        });
+        return;
+      }
+
+      // 2. I already sent one → waiting
+      const sent = await getSentInvitations(user.uid);
+      if (sent.length > 0) {
+        show(`
+          <h3>Invitation Pending</h3>
+          <p style="${sub}">Waiting for <strong>${escapeHTML(sent[0].inviteeEmail)}</strong> to sign up
+            and accept. They'll see your invitation on their dashboard once they create an account
+            with that email.</p>`);
+        return;
+      }
+
+      // 3. Not linked, nothing pending → invite form
+      show(`
+        <h3>Link Your Co-Parent</h3>
+        <p style="${sub}">AmicaBull works between both parents. Invite your co-parent by email —
+          once they accept, you can start resolving issues together.</p>
+        <form id="inviteForm" style="display:flex;gap:12px;flex-wrap:wrap">
+          <input class="form-input" type="email" id="inviteEmail" placeholder="Co-parent's email address"
+            required style="flex:1;min-width:220px">
+          <button class="btn btn-primary" type="submit">Send Invitation</button>
+        </form>`);
+      document.getElementById('inviteForm').addEventListener('submit', async (ev) => {
+        ev.preventDefault();
+        const email = document.getElementById('inviteEmail').value.trim();
+        if (email.toLowerCase() === (user.email || '').toLowerCase()) {
+          showToast("You can't invite yourself", 'error');
+          return;
+        }
+        const btn = ev.target.querySelector('button');
+        btn.disabled = true;
+        try {
+          await inviteCoParent(user.uid, `${profile.firstName} ${profile.lastName}`, email);
+          showToast('Invitation sent', 'success');
+          await renderCoParentCard(user, profile);
+        } catch (err) {
+          btn.disabled = false;
+          showToast(err.message || 'Could not send invitation', 'error');
+        }
+      });
     }
   </script>
 </body>
